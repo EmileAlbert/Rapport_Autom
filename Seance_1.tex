@@ -29,69 +29,107 @@ Le système étant d'un degré supérieur à un, nous allons travailler autour d
 
 L'échelon sera appliqué sur la totalité de la plage. Le système étant considéré comme linéaire, la raison de ce choix n'est pas d'augmenter la précision d'une approximation, mais plutôt de minimiser l'erreur induite par le bruit. En effet, un échelon plus grand permet de réduire le ratio signal/bruit.\\
 
-\textbf{Condition de l'essai}
+\paragraph{Condition de l'essai}
 \begin{itemize}
 \item \textcolor{red}{LTR700}
 \item Position du clapet - Ouvert
 \item Position de l'interrupteur de perturbation - 0
 \end{itemize}
 
-\textbf{Identification}
+\paragraph{Identification}
 \begin{itemize}
 \item Mode régulateur - MANU
 \item Échelon de température de l'air- de 45\% à 55\% - $\Delta = 10\%$
-\item \textcolor{red}{Mesure de la température de l'air en sortie - de ... à ... - $\Delta =$}  
+\item Mesure de la température de l'air en sortie de $39.5\%$ à $49.5\%$ - $\Delta = 10\%$
 
 \item \textcolor{red}{Courbe MATLAB}
+\begin{itemize}
+\item On trouve la valeur de a graphiquement grâce à la formule $a = \frac{a'}{\Delta y} = \frac{2.52}{9.78} = 0.2577$
 
-\item \textcolor{red}{Gain statique $k = \frac{\Delta y}{\Delta u} = $}
+\item $T_{U}$ est trouvé graphiquement et vaut 20.83 
+
+\item $T_{G}$ est trouvé graphiquement et vaut 145.83
+
+\item $T_{1}$ est trouvé graphiquement et vaut 58.33
+
+\item $T_{2}$ est trouvé graphiquement et vaut 75
+\end{itemize}
+\textcolor{red}{Feuille manuelle pour expliciter les valeurs graphiques en annexes ? + Unités}
+
+\item Gain statique $k = \frac{\Delta y}{\Delta u} = \frac{13.0}{13.04} = 0.970 $
 \end{itemize}
 
 \subsubsection{Modèle de Broïda}
+On modélise la fonction de transfert d'un système d'ordre n à l'aide d'un modèle du premier ordre combinée à un retard pur
 \begin{equation}
-H(s) = \frac{K}{1 + T_{S}}*e^{-T_{m}s}
+H_{B}(s) = \frac{K}{1 + Ts}*e^{-T_{m}s}
 \end{equation}
 
-\textcolor{red}{Avec}
+où 
 \begin{itemize}
-\item K 
-\item $T_{S}$
-\item $T_{m}$
-\item s
+\item K est le gain statique [sans unité]
+\item $T$ est la constante de temps ???
+\item $T_{m}$ est la constante de temps ???
 \end{itemize}
 
+Pour notre système nous obtenons suivant les formules et les valeurs trouvées graphiquement 
+\begin{itemize}
+\item $T = 5.5 (t_{2} - t_{1}) = 5.5 (75 - 58.33) = 91.685$
+\item $T_{m} = 2.8 t_{1} - 1.8 t_{2} = 2.8*58.33 - 1.8*75 = 28.324$
+\end{itemize}
 
-
-\subsubsection{Modèle de Vander Grinten}
+Ce qui donne 
 \begin{equation}
-H(s) = \frac{K e^{-s T_{m}}}{(sT_{1} + 1) (sT_{2} + 1)}
+H_{B}(s) = \frac{0.970}{1 + 91.685s }*e^{-28.324s}
 \end{equation}
 
-\textcolor{red}{Avec}
+\subsubsection{Modèle de Vander Grinten}
+Modélisation du système grâce à un modèle du second ordre avec deux pôles distincts et un temps mort
+
+\begin{equation}
+H_{V}(s) = \frac{K e^{-s T_{m}}}{(sT_{1} + 1) (sT_{2} + 1)}
+\end{equation}
+
+où 
 \begin{itemize}
-\item K 
-\item $T_{S}$
-\item $T_{1}$
-\item $T_{2}$
-\item s
+\item K est le gain statique [sans unité]
+\item $T_{1}$ est la constante de temps ???
+\item $T_{2}$ est la constante de temps ???
+\item $T_{m}$ est la constante de temps ???
+\end{itemize}
+
+Pour notre système nous obtenons suivant les formules et les valeurs trouvées graphiquement 
+\begin{itemize}
+\item $T_{1} = T_{G} \frac{3ae - 1}{1 + ae} = 145.83 \frac{3*0.2577*e - 1}{1 + 0.2577*e} = 94.445$
+\item $T_{2} = T_{G} \frac{1 - ae}{1 + ae} = 145.83 \frac{1 - 0.2577*e}{1 + 0.2577*e} = 25.693$
+\item $T_{m} = T_{U} \frac{T_{1}T_{2}}{T_{1} + 3T_{2}} = 20.83 \frac{94.445*25.693}{94.445 + 3*25.693} = 6.683$
 \end{itemize}
 
 \subsubsection{Modèle de Stejc}
+Ce modèle identifie un ordre n quelconque à condition d'avoir tous les pôles identiques
 \begin{equation}
-H(s) = \frac{K e^{-s T_{m}}}{(sT + 1)^{n}}
+H_{S}(s) = \frac{K e^{-s T_{m}}}{(sT + 1)^{n}}
 \end{equation}
 
-\textcolor{red}{Avec}
+où 
 \begin{itemize}
-\item K 
-\item $T_{S}$
-\item $T_{1}$
-\item $T_{2}$
-\item s
+\item K est le gain statique [sans unité]
+\item $T$ est la constante de temps ???
+\item $T_{m}$ est la constante de temps ???
+\item n est l'ordre du modèle
 \end{itemize}
 
-\fig{Stejc_table.png}{1}{\textcolor{red}{Légende}}
+Pour notre système, les valeurs calculées pour définir les paramètres du modèle de Strejc sont
+\begin{itemize}
+\item $\frac{T_{U}}{T_{G}} = \frac{20.83}{145.83} = 0.143$
+\item $\frac{T_{G}}{T} = \frac{145.83}{91.685} = 1.591 $
+\textcolor{red}{Avec $T = 5.5 (t_{2} - t_{1}) = 5.5 (75 - 58.33) = 91.685$ ?}
+\end{itemize}
 
+L'ordre est alors déterminé en fonction du tableau fournis dans les notes de laboratoires 
+\fig{Stejc_table.png}{1}{}
+
+\textbf{Remarque :}Dans le cas où les valeurs calculée tombent entre les valeurs énoncées dans le tableau, on prendra la valeur inférieure pour définir l'ordre. En effet, la courbe correspondante à l'ordre inférieure pourra être rectifiée avec un temps mort pur pour se rapprocher de la courbe réelle, au contraire de la courbe correspondante à l'ordre supérieur. 
 
 \subsubsection{Optimisation des modèles}
 L'objectif de cette méthode est de trouver un modèle optimal par recherche algorithmique par fonction de coût. Les modèles trouvés précédemment sont donc améliorés par la routine \url{fminsearch} de MATLAB.
@@ -101,4 +139,26 @@ L'objectif de cette méthode est de trouver un modèle optimal par recherche alg
 conclusion temporaire - superposition des courbes 
 
 \subsection{Synthèse de régulateur par la méthode de Chien - Hrones - Reswick}
+La méthode de Chien - Hrones - Reswick est un méthode de synthèse directe de régulateur PID. Le type de régulateur (P, PI ou PID) est choisi en fonction de la réglabilité du système étudié et ses paramètres sont ensuite calculée en fonction des constantes de temps observées. 
 
+\begin{itemize}
+\item Réglabilité $\rho = \frac{T_{G}}{T_{U}} = \frac{145.83}{20.83} = 7.001$\\
+Selon les critères de la méthodes, le régulateur adapté est un régulateur PI ($10 > \rho >= 7$)
+
+On trouve alors 
+\begin{itemize}
+\item $K_{BO} = \frac{\rho}{2.9} = \frac{7.001}{2.9} = 2.414$
+\item $K_{r} = \frac{K_{BO}}{K_{s}} = \frac{2.414}{0.97} = 2.489$
+\item $T_{i} = 1.2T_{G} = 1.2*145.83 = 174.996$
+\end{itemize}
+\end{itemize}
+
+Si on impose de travailler avec un régulateur PID on trouve alors 
+\begin{itemize}
+\item $K_{BO} = \frac{\rho}{1.7} = \frac{7.001}{1.7} = 4.118$
+\item $K_{r} = \frac{K_{BO}}{K_{s}} = \frac{4.118}{0.97} = 2.245$
+\item $T_{i} = T_{G} = 145.83$
+
+\textcolor{red}{\item $T_{d} = (0.5...1)T_{U} = (0.5...1)*20.83 = $
+\item $T_{f} = \frac{T_{d}}{10...20} = $}
+\end{itemize}
