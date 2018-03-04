@@ -1,0 +1,51 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+
+\usepackage{PersonalPackage}
+\graphicspath{{Pictures/}}
+
+\usepackage{titling}
+\def\•subtitle{no title}
+\newcommand	{\subtitle}[1]{\def\•subtitle{#1}}
+
+\title{Laboratoire de régulation}
+\subtitle{Rapport de séances}
+
+\author{
+Emile Albert 14022@ecam.be\\\\
+Mathieu David\\\\
+William de Decker\\\\
+Tom Selleslagh\\\\
+} 
+
+
+
+\begin{document}
+\begin{titlepage} 
+	\hspace{0.5cm}	
+	\rule{1.5pt}{\textheight} 
+	\hspace{1.5cm}		
+	\parbox[b]{13cm}
+	{  		
+		{\huge \thetitle}\\[1\baselineskip]
+		{\LARGE \•subtitle} \\[1\baselineskip]
+		\today \\[3\baselineskip]
+		
+		{\Large \theauthor}\\[22\baselineskip]
+		\hspace*{6cm}\includegraphics[scale=0.3]{logo_ECAM.png}
+					
+	}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+\include{Seance_1}
+
+\end{document}
