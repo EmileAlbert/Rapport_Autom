@@ -11,4 +11,5 @@ plot(tm,ym)
 plot(yb)
 plot(yv)
 plot(ys)
+legend('Réponse réelle', 'Modèle de Broïda', 'Modèle de Vandergrinten', 'Modèle de Strejc')
 grid
