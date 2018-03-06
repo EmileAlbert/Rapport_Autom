@@ -42,7 +42,8 @@ L'échelon sera appliqué sur la totalité de la plage. Le système étant consi
 \item Échelon de température de l'air- de 45\% à 55\% - $\Delta = 10\%$
 \item Mesure de la température de l'air en sortie de $39.5\%$ à $49.5\%$ - $\Delta = 10\%$
 
-\item \textcolor{red}{Courbe MATLAB}
+\fig{S1_RepInd}{0.55}{Réponse indicielle du système}
+
 \begin{itemize}
 \item On trouve la valeur de a graphiquement grâce à la formule $a = \frac{a'}{\Delta y} = \frac{2.52}{9.78} = 0.2577$
 
@@ -135,8 +136,15 @@ L'ordre est alors déterminé en fonction du tableau fournis dans les notes de l
 L'objectif de cette méthode est de trouver un modèle optimal par recherche algorithmique par fonction de coût. Les modèles trouvés précédemment sont donc améliorés par la routine \url{fminsearch} de MATLAB.
 
 
-\subsection{Commentaires}
-conclusion temporaire - superposition des courbes 
+\subsection{Observations}
+Les 3 courbes des modèles utilisés pour modéliser le systèmes sont reprises ci-dessous
+
+\fig{S1_Superposition_model}{0.55}{}
+
+A l'aide de la fonction matlab d'optimisation, nous avons déterminé un modèle idéal et ses paramètres associés pour le système étudié
+
+\fig{S1_Optimisation}{0.7}{}
+
 
 \subsection{Synthèse de régulateur par la méthode de Chien - Hrones - Reswick}
 La méthode de Chien - Hrones - Reswick est un méthode de synthèse directe de régulateur PID. Le type de régulateur (P, PI ou PID) est choisi en fonction de la réglabilité du système étudié et ses paramètres sont ensuite calculée en fonction des constantes de temps observées. 
