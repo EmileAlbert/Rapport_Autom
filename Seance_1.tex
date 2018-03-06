@@ -98,7 +98,7 @@ L'échelon sera appliqué sur la totalité de la plage. Le système étant consi
 
 \paragraph{Condition de l'essai}
 \begin{itemize}
-\item \textcolor{red}{LTR700}
+\item Le système didactique LTR700 utilisé est le numéro 3
 \item Position du clapet - Ouvert
 \item Position de l'interrupteur de perturbation - 0
 \end{itemize}
@@ -122,9 +122,10 @@ L'échelon sera appliqué sur la totalité de la plage. Le système étant consi
 
 \item $T_{2}$ est trouvé graphiquement et vaut 75
 \end{itemize}
-\textcolor{red}{Feuille manuelle pour expliciter les valeurs graphiques en annexes ? + Unités}
 
-\item Gain statique $k = \frac{\Delta y}{\Delta u} = \frac{13.0}{13.04} = 0.970 $
+Les graphiques manuelles utilisés pour déterminer ces constantes se trouvent en annexe. 
+
+\item Gain statique $K = \frac{\Delta y}{\Delta u} = \frac{13.0}{13.04} = 0.970 $
 \end{itemize}
 
 \subsubsection{Modèle de Broïda}
@@ -136,8 +137,8 @@ H_{B}(s) = \frac{K}{1 + Ts}*e^{-T_{m}s}
 où 
 \begin{itemize}
 \item K est le gain statique [sans unité]
-\item $T$ est la constante de temps ???
-\item $T_{m}$ est la constante de temps ???
+\item $T$ est la constante de temps [s]
+\item $T_{m}$ est le temps mort [s]
 \end{itemize}
 
 Pour notre système nous obtenons suivant les formules et les valeurs trouvées graphiquement 
@@ -161,9 +162,9 @@ H_{V}(s) = \frac{K e^{-s T_{m}}}{(sT_{1} + 1) (sT_{2} + 1)}
 où 
 \begin{itemize}
 \item K est le gain statique [sans unité]
-\item $T_{1}$ est la constante de temps ???
-\item $T_{2}$ est la constante de temps ???
-\item $T_{m}$ est la constante de temps ???
+\item $T_{1}$ est la première constante de temps [s]
+\item $T_{2}$ est la deuxième constante de temps [s]
+\item $T_{m}$ est le temps mort [s]
 \end{itemize}
 
 Pour notre système nous obtenons suivant les formules et les valeurs trouvées graphiquement 
@@ -182,8 +183,8 @@ H_{S}(s) = \frac{K e^{-s T_{m}}}{(sT + 1)^{n}}
 où 
 \begin{itemize}
 \item K est le gain statique [sans unité]
-\item $T$ est la constante de temps ???
-\item $T_{m}$ est la constante de temps ???
+\item $T$ est la constante de temps [s]
+\item $T_{m}$ est le temps mort [s] 
 \item n est l'ordre du modèle
 \end{itemize}
 
@@ -212,6 +213,13 @@ A l'aide de la fonction matlab d'optimisation, nous avons déterminé un modèle
 
 \fig{S1_Optimisation}{0.7}{}
 
+De cette optimisation découle 4 paramètres :
+\begin{itemize}
+\item $K_{P}$ = 0.98
+\item $T_{1}$ = 114.74
+\item $T_{2}$ = 7.12
+\item $T_{m}$ = 14.97
+\end{itemize}
 
 \subsection{Synthèse de régulateur par la méthode de Chien - Hrones - Reswick}
 La méthode de Chien - Hrones - Reswick est un méthode de synthèse directe de régulateur PID. Le type de régulateur (P, PI ou PID) est choisi en fonction de la réglabilité du système étudié et ses paramètres sont ensuite calculée en fonction des constantes de temps observées. 
