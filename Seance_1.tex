@@ -131,7 +131,7 @@ Les graphiques manuelles utilisés pour déterminer ces constantes se trouvent e
 \subsubsection{Modèle de Broïda}
 On modélise la fonction de transfert d'un système d'ordre n à l'aide d'un modèle du premier ordre combinée à un retard pur
 \begin{equation}
-H_{B}(s) = \frac{K}{1 + Ts}*e^{-T_{m}s}
+H_{B}(s) = \frac{K}{1 + Ts} \cdot e^{-T_{m}s}
 \end{equation}
 
 où 
@@ -144,12 +144,12 @@ où
 Pour notre système nous obtenons suivant les formules et les valeurs trouvées graphiquement 
 \begin{itemize}
 \item $T = 5.5 (t_{2} - t_{1}) = 5.5 (75 - 58.33) = 91.685$
-\item $T_{m} = 2.8 t_{1} - 1.8 t_{2} = 2.8*58.33 - 1.8*75 = 28.324$
+\item $T_{m} = 2.8 t_{1} - 1.8 t_{2} = 2.8 \cdot 58.33 - 1.8 \cdot 75 = 28.324$
 \end{itemize}
 
 Ce qui donne 
 \begin{equation}
-H_{B}(s) = \frac{0.970}{1 + 91.685s }*e^{-28.324s}
+H_{B}(s) = \frac{0.970}{1 + 91.685s } \cdot e^{-28.324s}
 \end{equation}
 
 \subsubsection{Modèle de Vander Grinten}
@@ -169,9 +169,9 @@ où
 
 Pour notre système nous obtenons suivant les formules et les valeurs trouvées graphiquement 
 \begin{itemize}
-\item $T_{1} = T_{G} \frac{3ae - 1}{1 + ae} = 145.83 \frac{3*0.2577*e - 1}{1 + 0.2577*e} = 94.445$
-\item $T_{2} = T_{G} \frac{1 - ae}{1 + ae} = 145.83 \frac{1 - 0.2577*e}{1 + 0.2577*e} = 25.693$
-\item $T_{m} = T_{U} \frac{T_{1}T_{2}}{T_{1} + 3T_{2}} = 20.83 \frac{94.445*25.693}{94.445 + 3*25.693} = 6.683$
+\item $T_{1} = T_{G} \frac{3ae - 1}{1 + ae} = 145.83 \frac{3 \cdot 0.2577e - 1}{1 + 0.2577e} = 94.445$
+\item $T_{2} = T_{G} \frac{1 - ae}{1 + ae} = 145.83 \frac{1 - 0.2577e}{1 + 0.2577e} = 25.693$
+\item $T_{m} = T_{U} \frac{T_{1}T_{2}}{T_{1} + 3T_{2}} = 20.83 \frac{94.445 \cdot 25.693}{94.445 + 3 \cdot 25.693} = 6.683$
 \end{itemize}
 
 \subsubsection{\textcolor{red}{Modèle de Strejc}}
@@ -226,22 +226,30 @@ La méthode de Chien - Hrones - Reswick est un méthode de synthèse directe de 
 
 \begin{itemize}
 \item Réglabilité $\rho = \frac{T_{G}}{T_{U}} = \frac{145.83}{20.83} = 7.001$\\
-Selon les critères de la méthodes, le régulateur adapté est un régulateur PI ($10 > \rho >= 7$)
+Selon les critères de la méthodes, le régulateur adapté est un régulateur PI ($10 > \rho >= 7$)\\
 
 On trouve alors 
 \begin{itemize}
 \item $K_{BO} = \frac{\rho}{2.9} = \frac{7.001}{2.9} = 2.414$
 \item $K_{r} = \frac{K_{BO}}{K_{s}} = \frac{2.414}{0.97} = 2.489$
-\item $T_{i} = 1.2T_{G} = 1.2*145.83 = 174.996$
+\item $T_{i} = 1.2T_{G} = 1.2 \cdot 145.83 = 174.996$
 \end{itemize}
 \end{itemize}
 
-Si on impose de travailler avec un régulateur PID on trouve alors 
+Si on impose de travailler avec un régulateur PID on trouve alors les coefficient pour un régulateur en série
+
 \begin{itemize}
 \item $K_{BO} = \frac{\rho}{1.7} = \frac{7.001}{1.7} = 4.118$
 \item $K_{r} = \frac{K_{BO}}{K_{s}} = \frac{4.118}{0.97} = 2.245$
 \item $T_{i} = T_{G} = 145.83$
 
-\textcolor{red}{\item $T_{d} = (0.5...1)T_{U} = (0.5...1)*20.83 = $
+\textcolor{red}{\item $T_{d} = (0.5...1)T_{U} = (0.5...1) \cdot 20.83 = $
 \item $T_{f} = \frac{T_{d}}{10...20} = $}
+\end{itemize}
+
+Pour un régulateur en parallèle, les paramètres deviennent 
+\begin{itemize}
+\item $K_{p} = K$
+\item $K_{i} = \frac{K_{p}}{T_{i}}$
+\item $K_{d} = K_{p} \cdot T_{d}$
 \end{itemize}

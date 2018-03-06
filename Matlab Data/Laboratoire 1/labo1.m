@@ -8,8 +8,10 @@ ys = step(10*strejc(0.97,20.83,145.83,0.20),tm);
 figure
 hold on
 plot(tm,ym)
-%plot(yb)
-%plot(yv)
-%plot(ys)
-%legend('Réponse réelle', 'Modèle de Broïda', 'Modèle de Vandergrinten', 'Modèle de Strejc')
+plot(yb)
+plot(yv)
+plot(ys)
+legend('Réponse réelle', 'Modèle de Broïda', 'Modèle de Vandergrinten', 'Modèle de Strejc')
+xlabel('Temps [s]')
+ylabel('[%]')
 grid
