@@ -174,7 +174,7 @@ Pour notre système nous obtenons suivant les formules et les valeurs trouvées 
 \item $T_{m} = T_{U} \frac{T_{1}T_{2}}{T_{1} + 3T_{2}} = 20.83 \frac{94.445 \cdot 25.693}{94.445 + 3 \cdot 25.693} = 6.683$
 \end{itemize}
 
-\subsubsection{\textcolor{red}{Modèle de Strejc}}
+\subsubsection{Modèle de Strejc}
 Ce modèle identifie un ordre n quelconque à condition d'avoir tous les pôles identiques
 \begin{equation}
 H_{S}(s) = \frac{K e^{-s T_{m}}}{(sT + 1)^{n}}
@@ -191,18 +191,39 @@ où
 Pour notre système, les valeurs calculées pour définir les paramètres du modèle de Strejc sont
 \begin{itemize}
 \item $\frac{T_{U}}{T_{G}} = \frac{20.83}{145.83} = 0.143$
-\item $\frac{T_{G}}{T} = \frac{145.83}{91.685} = 1.591 $
-\textcolor{red}{Avec $T = 5.5 (t_{2} - t_{1}) = 5.5 (75 - 58.33) = 91.685$ ?}
 \end{itemize}
 
-L'ordre est alors déterminé en fonction du tableau fournis dans les notes de laboratoires 
+L'ordre ainsi que le T est alors déterminé en fonction du tableau fournis dans les notes de laboratoires 
 \fig{S1_Stejc_table.png}{1}{}
+
+\begin{itemize}
+\item Pour l'ordre on prendra l'ordre 2 (voir \textbf{Remarque})
+\item On trouve dans un second temps la valeur de T, grâce à la valeur prise dans les tables, par la formule 
+\begin{equation}
+T = \frac{T_{G}}{2.72} = \frac{145.83}{2.72} = 53.614
+\end{equation}
+Il faut alors corriger ce modèle en appliquant un temps mort. La valeur du temps mort est calculé suivant $T_{m} = T_{U}* - T_{U} = 0.143 - 0.100 = 0.043$
+
+\end{itemize}
 
 \textbf{Remarque :}Dans le cas où les valeurs calculée tombent entre les valeurs énoncées dans le tableau, on prendra la valeur inférieure pour définir l'ordre. En effet, la courbe correspondante à l'ordre inférieure pourra être rectifiée avec un temps mort pur pour se rapprocher de la courbe réelle, au contraire de la courbe correspondante à l'ordre supérieur. 
 
 \subsubsection{Optimisation des modèles}
 L'objectif de cette méthode est de trouver un modèle optimal par recherche algorithmique par fonction de coût. Les modèles trouvés précédemment sont donc améliorés par la routine \url{fminsearch} de MATLAB.
 
+De cette optimisation découle 4 paramètres :
+\begin{itemize}
+\item $K_{P}$ = 0.98
+\item $T_{1}$ = 114.74
+\item $T_{2}$ = 7.12
+\item $T_{m}$ = 14.97
+\end{itemize}
+
+Avec ces 4 paramètres nous pouvons dès lors calculé le modèle suivant le modèle de Vander Grinten pour donner la fonction de transfert du système :
+\begin{equation}
+H(s) = \frac{K \cdot e^{-sT_{m}}}{(sT_{1} + 1)(sT_{2} + 1)} = 
+\frac{0.98 \cdot e^{-s \cdot 14.97}}{(114.74s + 1)(7.12s + 1)}
+\end{equation}
 
 \subsection{Observations}
 Les 3 courbes des modèles utilisés pour modéliser le systèmes sont reprises ci-dessous
@@ -213,16 +234,10 @@ A l'aide de la fonction matlab d'optimisation, nous avons déterminé un modèle
 
 \fig{S1_Optimisation}{0.7}{}
 
-De cette optimisation découle 4 paramètres :
-\begin{itemize}
-\item $K_{P}$ = 0.98
-\item $T_{1}$ = 114.74
-\item $T_{2}$ = 7.12
-\item $T_{m}$ = 14.97
-\end{itemize}
-
 \subsection{Synthèse de régulateur par la méthode de Chien - Hrones - Reswick}
 La méthode de Chien - Hrones - Reswick est un méthode de synthèse directe de régulateur PID. Le type de régulateur (P, PI ou PID) est choisi en fonction de la réglabilité du système étudié et ses paramètres sont ensuite calculée en fonction des constantes de temps observées. 
+
+Les coefficients utilisés ont été tirés du syllabus de M. Arnould et pas le syllabus du laboratoire. La différence réside dans le fait que le comportement (réjection de perturbation ou suivis de consigne) n'est pas différencié.
 
 \begin{itemize}
 \item Réglabilité $\rho = \frac{T_{G}}{T_{U}} = \frac{145.83}{20.83} = 7.001$\\
@@ -253,3 +268,5 @@ Pour un régulateur en parallèle, les paramètres deviennent
 \item $K_{i} = \frac{K_{p}}{T_{i}}$
 \item $K_{d} = K_{p} \cdot T_{d}$
 \end{itemize}
+
+Cependant, les régulateurs utilisés au laboratoire sont des régulateurs séries.
