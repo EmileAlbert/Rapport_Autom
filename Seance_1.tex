@@ -4,22 +4,89 @@
 \textit{Une bonne régulation ne peut se faire sans un bon modèle}
 \end{center}
 
-Les régulateurs sont destinés à opérer dans des systèmes physiques. Les réponses qu'ils doivent fournir pour une bonne régulation s'appuient sur leur synthèse et les paramètres qui en découlent. Ces paramètres doivent correspondre au plus près à la réalité physique du système. Cette réalité est exprimée au travers du modèle mathématique associé à ce dernier. Ce modèle correspond à la fonction de transfert du système, autrement dit à la relation liant son (ses) entrée(s) à sa (ses) sortie(s).\\
+Les régulateurs sont destinés à opérer sur des systèmes physiques. 
+Les réponses qu'ils doivent fournir pour une bonne régulation s'appuient sur 
+leur synthèse et les paramètres qui en découlent. 
+Ces paramètres doivent correspondre au plus près à la réalité physique du système. 
+Cette réalité est exprimée au travers du modèle mathématique associé à ce dernier. 
+Ce modèle correspond à la fonction de transfert du système, 
+autrement dit à la relation liant son (ses) entrée(s) à sa (ses) sortie(s).\\
 
-\subsubsection{Système}
-Dans le cadre de ce laboratoire, le système est un canon à chaleur. Il est constitué d'une résistance chauffante, d'en ventilateur ainsi que d'un clapet pouvant modifier l'entrée d'air du canon.
+\subsection{Système}
+Dans le cadre de ce laboratoire, le système que nous allons étudier est un 
+canon à chaleur didactique 'LTR700'. Il est constitué d'une résistance chauffante, 
+d'un ventilateur et d'une sonde de température à la sortie.
+
+De plus, le système possède deux mécanismes permettant d'introduire des perturbations:
+\begin{enumerate}
+    \item Un clapet pouvant modifier l'entrée d'air du canon
+    \item Un switch permettant de court-circuiter une partie de la résistance
+\end{enumerate}
+
 
 \fig{S1_Systeme.png}{1}{Schéma du système}
 
-L'entrée du système correspond au courant injecté dans la résistance, directement relié à la puissance thermique dissipée dans le canon ($P = R*I^{2}$).\\
+
+\subsubsection{Entrées - Sorties}
+L'entrée $u$ du système correspond au courant $i$ injecté dans la résistance, 
+directement lié à la puissance thermique dissipée à l'intérieur du canon ($P = R \cdot I^{2}$).\\
  
-La sortie du système, quant à elle, correspond à la température de l'air à la sortie du canon mesurée au moyen d'un capteur industriel \textcolor{red}{LTR700}.\\ 
+La sortie $y$ du système, quant à elle, correspond à la température de l'air $T^\circ$
+mesuré à la sortie du canon à l'aide d'une sonde de température 'PT100'.\\ 
 
-Au vu de ces considérations, le système ne peut pas être représenté par un système du premier ordre. En effet, l'équation de puissance dissipée et de transfert de chaleur par rayonnement apporte des termes de puissance deux et quatre.\\
+\begin{figure}[H]	
+    \centering
+    \tikzstyle{int}=[draw, fill=blue!20, minimum size=2em]
+    \begin{tikzpicture}[auto, node distance=2cm,>=latex']
+        \node[int] (system) {$H(s)$};
+        \node (input) [left of=system,node distance=2cm, coordinate] {system};
+        \node [coordinate] (output) [right of=system, node distance=2cm]{};
+        \path[->] (input) edge node {$i$} (system);
+        \path[->] (system) edge node {$T^\circ$} (output);
+    \end{tikzpicture}
+    \caption{Schéma bloc}
+\end{figure}
 
-Les objectifs de cette première séance sont d'une part comparer trois modélisations différentes pour le système physique et de trouver un modèle optimal et d'autre part de synthétiser par méthode directe un régulateur PID (méthode de Chien-Hrones-Reswick). 
 
-\textcolor{red}{Schéma bloc des E/S et de la fonction de transfert}
+\subsubsection{Linéarisation du système}
+Le système n'est pas linéaire puisque, premièrement, l'équation de la puissance en fonction
+du courant ($P = R \cdot I^2$) introduit déjà un exposant d'ordre 2. 
+Deuxièmement, l'échange de chaleur entre la résistance et l'air se fait par convection, 
+mais également par rayonnement ($P = \epsilon S \sigma T^4$), ce qui introduit des termes
+de puissance 4.\\
+
+Il faut donc linéariser le système. On travaillera en petite variations afin que
+l'hypothèse de linéarité soit valide.
+ 
+
+
+\subsection{Modélisation vs. identification}
+Avant de pouvoir réguler le système, il nous faut trouver un modèle dynamique fiable
+du système, qui nous permettera de savoir ou estimer comment le système réagira aux
+variations de ses entrées.\\
+
+Il existe deux méthodes principales pour trouver le modèle dynamique d'un système: 
+\subsubsection{La modélisation}
+La modélisation, consiste à utiliser les équations différentielles régissant le système.
+On peut ainsi trouver la fonction de transfert en exprimant la relation des sorties aux 
+entrées dans le domaine de Laplace. La modélisation d'un système nécessite cependant de
+connaitre toutes les équations différentielles, ainsi que leurs coefficients.
+Ceci n'est pas toujours facile, ni même possible. Dans ce cas, nous pourrons avoir recourt
+a des méthodes d'identification du système par voie expérimentale.
+
+\subsubsection{L'identification}
+L'identification d'un système consiste à le considérer comme une boite noire et à réaliser
+des mesures pertinentes sur celui-ci afin de pouvoir en déduire sa fonction de transfert.
+Une mesure qui est souvent réalisée afin d'identifier le système est la réponse indicielle.
+Elle consiste à mettre un échelon en entrée et mesurer la sortie. A partir de la réponse,
+il est possible d'approximer la fonction de transfert du système.\\
+
+C'est ce que nous alons faire durant cette séance. Les objectifs de cette 
+première séance consiste à comparer trois méthodes de modélisations 
+différentes pour le système physique, de trouver un modèle optimal en exécutant une routine
+d'optimisation dans Matlab et finalement de synthétiser par méthode directe un 
+régulateur PID (méthode de Chien-Hrones-Reswick).
+
 
 \subsection{Essai indiciel}
 \subsubsection{Description et conditions de l'essai}
