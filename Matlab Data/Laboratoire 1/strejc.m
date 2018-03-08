@@ -20,7 +20,8 @@ else
 end    
 T1 = tg*((3*a*exp(1)-1)/(1+a*exp(1)));
 T2 = tg*((1-a*exp(1))/(1+a*exp(1)));
-Tm = tu - ((T1*T2)/(T1+3*T2));
+%Tm = tu - ((T1*T2)/(T1+3*T2));
+Tm = 0.143-0.1;
 s = tf('s');
 hv = (k*exp(-s*Tm))/(((s*T)+1)^n);
 fprintf('n value for Strejc= %f\n', n);  % Method 1
