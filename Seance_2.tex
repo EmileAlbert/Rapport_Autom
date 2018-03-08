@@ -1,10 +1,21 @@
-\section{Séance 2 : Etude du régulateur PID}
+\section{Séance 2 : \'Etude du régulateur PID}
 \subsection{Introduction}
+La première séance avait pour but d'identifier le système que nous allons utiliser au laboratoire. Les paramètres identifiés ont permis de calculer des valeurs pour les paramètres d'un régulateurs PID selon la méthode de Chien - Hrones - Reswick. \\
+
+Cette séance est dans la continuité de la première. En effet, l'objectif de ce laboratoire est d'observer l'influence d'un régulateur PID sur le système. Premièrement, le régulateurs PID est tuner avec les valeurs trouvées au laboratoire 1 (K0, Ti0, Td0). Ensuite, nous avons fait varier ces paramètres pour observer leur influence respective. Ces observations, présentées sous forme de neuf essais, seront ensuite comparées entre elles. 
 
 \subsection{Essais}
-Attention, le gain utilisé ici comme gain K0 n'est pas le gain trouvé au laboratoire 1 par la méthode CHR. Ce dernier étant trop faible (effet de l'imprécision sur la détermination de $T_{U}$ et $T_{G}$) on a décidé de prendre $K0 = 1.5 \cdot$ Gain du premier laboratoire. Cette valeur est celle utilisée pour l'ensemble des essais de ce laboratoire. 
+Attention, le gain utilisé ici comme gain K0 n'est pas le gain trouvé au laboratoire 1 par la méthode CHR. Ce dernier étant trop faible (effet de l'imprécision sur la détermination de $T_{U}$ et $T_{G}$) on a décidé de prendre $K0 = 1.5 \cdot$ Gain du premier laboratoire. Cette valeur est celle utilisée pour l'ensemble des essais de ce laboratoire.\\
 
-Attention Ko = 1.5 Gain trouvé au labo 1 - explication
+Les paramètres trouvé par la méthode CHR au premier laboratoire ont pour valeurs : 
+\begin{itemize}
+\item K0  = 4.118
+\item Ti0 = 145.830
+\item Td0 = 15.662 et Tf0 = 1.041
+\end{itemize}
+
+Le K0 utilisé durant cette séance a donc pour valeur $4.118 \cdot 1.5 = 6.177$
+
 \begin{itemize}
 \item Essais 0 - s2e0 - 0.66Ko Tio Tdo\\
 Comme expliqué dans l'introduction, le K0 utilisé ici un multiple de celui calculé au premier laboratoire. Cette essais ci visant à observer le comportement des valeurs du premier laboratoire, nous avons ajouter le coefficient de 0.66 pour retrouver le K0 du premier laboratoire.
@@ -24,9 +35,14 @@ Comme expliqué dans l'introduction, le K0 utilisé ici un multiple de celui cal
 \item Essais 7 - s2e7 - K0 - Ti0 4Td0
 
 \item Essais 8 - s2e8 - 8K0 - 100000 0.001
-
-
-
-
-
 \end{itemize}
+
+\subsection{Comparaison des essais}
+\textcolor{red}{Diagramme de Bode - Diagramme temporelle\\}
+
+\textcolor{red}{Stabilité, temps de réponse, dépassement, forme de l’action (énergique, bruitée), action maximale demandée, marges de gain et de phase en fonction de K, Ti et Td.}
+
+\subsection{Régulateur optimisé}
+Sur base des observations précédentes, nous avons pu intuitivement modifier les valeurs des trois paramètres du régulateur PID pour tenter de l'optimiser.\\
+
+\textcolor{red}{Présentation de ses résultats}
