@@ -23,9 +23,7 @@ De plus, le système possède deux mécanismes permettant d'introduire des pertu
     \item Un switch permettant de court-circuiter une partie de la résistance
 \end{enumerate}
 
-
 \fig{S1_Systeme.png}{1}{Schéma du système}
-
 
 \subsubsection{Entrées - Sorties}
 L'entrée $u$ du système correspond au courant $i$ injecté dans la résistance, 
@@ -54,34 +52,33 @@ Deuxièmement, l'échange de chaleur entre la résistance et l'air se fait par c
 mais également par rayonnement ($P = \epsilon S \sigma T^4$), ce qui introduit des termes
 de puissance 4.\\
 
-Il faut donc linéariser le système. On travaillera en petite variations afin que
-l'hypothèse de linéarité soit valide.
+Il faut donc linéariser le système. On travaillera en petites variations afin que l'hypothèse de linéarité soit valide.
  
-\subsection{Modélisation vs. identification}
+\subsection{Modélisation vs identification}
 Avant de pouvoir réguler le système, il nous faut trouver un modèle dynamique fiable
-du système, qui nous permettera de savoir ou estimer comment le système réagira aux
+du système, qui nous permettra de savoir ou estimer comment le système réagira aux
 variations de ses entrées.\\
 
-Il existe deux méthodes principales pour trouver le modèle dynamique d'un système: 
+Deux méthodes principales existent pour trouver le modèle dynamique d'un système: 
 \subsubsection{La modélisation}
-La modélisation, consiste à utiliser les équations différentielles régissant le système.
+La modélisation consiste à utiliser les équations différentielles régissant le système.
 On peut ainsi trouver la fonction de transfert en exprimant la relation des sorties aux 
 entrées dans le domaine de Laplace. La modélisation d'un système nécessite cependant de
 connaitre toutes les équations différentielles, ainsi que leurs coefficients.
-Ceci n'est pas toujours facile, ni même possible. Dans ce cas, nous pourrons avoir recourt
-a des méthodes d'identification du système par voie expérimentale.
+Ceci n'est pas toujours facile, ni même possible. Dans ce cas, nous pourrons avoir recours
+à des méthodes d'identification du système par voie expérimentale.
 
 \subsubsection{L'identification}
 L'identification d'un système consiste à le considérer comme une boite noire et à réaliser
 des mesures pertinentes sur celui-ci afin de pouvoir en déduire sa fonction de transfert.
 Une mesure qui est souvent réalisée afin d'identifier le système est la réponse indicielle.
-Elle consiste à mettre un échelon en entrée et mesurer la sortie. A partir de la réponse,
+Elle consiste à mettre un échelon en entrée et mesurer la sortie. À partir de la réponse,
 il est possible d'approximer la fonction de transfert du système.\\
 
-C'est ce que nous alons faire durant cette séance. Les objectifs de cette 
+C'est ce que nous allons faire durant cette séance. L'objectif de cette 
 première séance consiste à comparer trois méthodes de modélisations 
-différentes pour le système physique, de trouver un modèle optimal en exécutant une routine
-d'optimisation dans Matlab et finalement de synthétiser par méthode directe un 
+différentes pour le système physique, à trouver un modèle optimal en exécutant une routine
+d'optimisation dans Matlab et finalement à synthétiser par méthode directe un 
 régulateur PID (méthode de Chien-Hrones-Reswick).
 
 
@@ -120,13 +117,13 @@ L'échelon sera appliqué sur la totalité de la plage. Le système étant consi
 \item $T_{2}$ est trouvé graphiquement et vaut 75
 \end{itemize}
 
-Les graphiques manuelles utilisés pour déterminer ces constantes se trouvent en annexe. 
+Les graphiques manuels utilisés pour déterminer ces constantes se trouvent en annexe. 
 
 \item Gain statique $K = \frac{\Delta y}{\Delta u} = \frac{13.0}{13.04} = 0.970 $
 \end{itemize}
 
 \subsubsection{Modèle de Broïda}
-On modélise la fonction de transfert d'un système d'ordre n à l'aide d'un modèle du premier ordre combinée à un retard pur
+On modélise la fonction de transfert d'un système d'ordre n à l'aide d'un modèle du premier ordre combiné à un retard pur
 \begin{equation}
 H_{B}(s) = \frac{K}{1 + Ts} \cdot e^{-T_{m}s}
 \end{equation}
@@ -190,11 +187,11 @@ Pour notre système, les valeurs calculées pour définir les paramètres du mod
 \item $\frac{T_{U}}{T_{G}} = \frac{20.83}{145.83} = 0.143$
 \end{itemize}
 
-L'ordre ainsi que le T est alors déterminé en fonction du tableau fournis dans les notes de laboratoires 
+L'ordre ainsi que le T est alors déterminé en fonction du tableau fourni dans les notes de laboratoires 
 \fig{S1_Stejc_table.png}{1}{}
 
 \begin{itemize}
-\item Pour l'ordre on prendra l'ordre 2 (voir \textbf{Remarque})
+\item Pour l'ordre, on prendra l'ordre 2 (voir \textbf{Remarque})
 \item On trouve dans un second temps la valeur de T, grâce à la valeur prise dans les tables, par la formule 
 \begin{equation}
 T = \frac{T_{G}}{2.72} = \frac{145.83}{2.72} = 53.614
@@ -203,12 +200,12 @@ Il faut alors corriger ce modèle en appliquant un temps mort. La valeur du temp
 
 \end{itemize}
 
-\textbf{Remarque :}Dans le cas où les valeurs calculée tombent entre les valeurs énoncées dans le tableau, on prendra la valeur inférieure pour définir l'ordre. En effet, la courbe correspondante à l'ordre inférieure pourra être rectifiée avec un temps mort pur pour se rapprocher de la courbe réelle, au contraire de la courbe correspondante à l'ordre supérieur. 
+\textbf{Remarque :}Dans le cas où les valeurs calculées tombent entre les valeurs énoncées dans le tableau, on prendra la valeur inférieure pour définir l'ordre. En effet, la courbe correspondante à l'ordre inférieure pourra être rectifiée avec un temps mort pur pour se rapprocher de la courbe réelle, au contraire de la courbe correspondante à l'ordre supérieur. 
 
 \subsubsection{Optimisation des modèles}
 L'objectif de cette méthode est de trouver un modèle optimal par recherche algorithmique par fonction de coût. Les modèles trouvés précédemment sont donc améliorés par la routine \url{fminsearch} de MATLAB.
 
-De cette optimisation découle 4 paramètres :
+De cette optimisation découlent 4 paramètres :
 \begin{itemize}
 \item $K_{P}$ = 0.98
 \item $T_{1}$ = 114.74
@@ -216,29 +213,29 @@ De cette optimisation découle 4 paramètres :
 \item $T_{m}$ = 14.97
 \end{itemize}
 
-Avec ces 4 paramètres nous pouvons dès lors calculé le modèle suivant le modèle de Vander Grinten pour donner la fonction de transfert du système :
+Avec ces 4 paramètres, nous pouvons dès lors calculer le modèle suivant le modèle de Vander Grinten pour donner la fonction de transfert du système :
 \begin{equation}
 H(s) = \frac{K \cdot e^{-sT_{m}}}{(sT_{1} + 1)(sT_{2} + 1)} = 
 \frac{0.98 \cdot e^{-s \cdot 14.97}}{(114.74s + 1)(7.12s + 1)}
 \end{equation}
 
 \subsection{Observations}
-Les 3 courbes des modèles utilisés pour modéliser le systèmes sont reprises ci-dessous
+Les 3 courbes des modèles utilisés pour modéliser le système sont reprises ci-dessous
 
 \fig{S1_Superposition_model}{0.55}{}
 
-A l'aide de la fonction matlab d'optimisation, nous avons déterminé un modèle idéal et ses paramètres associés pour le système étudié
+À l'aide de la fonction matlab d'optimisation, nous avons déterminé un modèle idéal et ses paramètres associés pour le système étudié
 
 \fig{S1_Optimisation}{0.7}{}
 
 \subsection{Synthèse de régulateur par la méthode de Chien - Hrones - Reswick}
-La méthode de Chien - Hrones - Reswick est un méthode de synthèse directe de régulateur PID. Le type de régulateur (P, PI ou PID) est choisi en fonction de la réglabilité du système étudié et ses paramètres sont ensuite calculée en fonction des constantes de temps observées. 
+La méthode de Chien - Hrones - Reswick est une méthode de synthèse directe de régulateur PID. Le type de régulateur (P, PI ou PID) est choisi en fonction de la réglabilité du système étudié et ses paramètres sont ensuite calculés en fonction des constantes de temps observées. 
 
 Les coefficients utilisés ont été tirés du syllabus de M. Arnould et pas le syllabus du laboratoire. La différence réside dans le fait que le comportement (réjection de perturbation ou suivis de consigne) n'est pas différencié.
 
 \begin{itemize}
 \item Réglabilité $\rho = \frac{T_{G}}{T_{U}} = \frac{145.83}{20.83} = 7.001$\\
-Selon les critères de la méthodes, le régulateur adapté est un régulateur PI ($10 > \rho >= 7$)\\
+Selon les critères de la méthode, le régulateur adapté est un régulateur PI ($10 > \rho >= 7$)\\
 
 On trouve alors 
 \begin{itemize}
@@ -248,7 +245,7 @@ On trouve alors
 \end{itemize}
 \end{itemize}
 
-Si on impose de travailler avec un régulateur PID on trouve alors les coefficient pour un régulateur en série
+Si on impose de travailler avec un régulateur PID, on trouve alors les coefficients pour un régulateur en série
 
 \begin{itemize}
 \item $K_{BO} = \frac{\rho}{1.7} = \frac{7.001}{1.7} = 4.118$
@@ -259,11 +256,12 @@ Si on impose de travailler avec un régulateur PID on trouve alors les coefficie
 \item $T_{f} = \frac{T_{d}}{15} =  \frac{15.622}{15} = 1.041 $
 \end{itemize}
 
-Pour un régulateur en parallèle, les paramètres deviennent 
+Bien qu'au laboratoire les régulateurs utilisés sont de type série, dans l'industrie, les régulateurs sont pour la majorité de type parallèle. Ce dernier à pour avantage de rendre indépendante l'influence de chaque paramètre P, I et D vis à vis des autres. Pour utiliser nos paramètres dans un régulateur en parallèle, ceux-ci sont convertis selon les formules ci-dessous. Attention, ces formules ne sont pas valables dans tous les cas. 
+
 \begin{itemize}
 \item $K_{p} = K$
 \item $K_{i} = \frac{K_{p}}{T_{i}}$
 \item $K_{d} = K_{p} \cdot T_{d}$
 \end{itemize}
 
-Cependant, les régulateurs utilisés au laboratoire sont des régulateurs séries.
+
