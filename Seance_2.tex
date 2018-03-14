@@ -1,41 +1,68 @@
 \section{Séance 2 : \'Etude du régulateur PID}
 \subsection{Introduction}
-La première séance avait pour but d'identifier le système que nous allons utiliser au laboratoire. Les paramètres identifiés ont permis de calculer des valeurs pour les paramètres d'un régulateurs PID selon la méthode de Chien - Hrones - Reswick. \\
+La première séance avait pour but d'identifier le système thermique que nous
+devons réguler. L'identification du système a permit un premier ensemble de gains
+pour un régulateur de type PID en utilisant la méthode de 
+\textbf{Chien - Hrones - Reswick}. Les gains trouvés ne sont en aucun cas un optimum,
+mais un bon point de départ pour commencer à les optimiser.\\
 
-Cette séance est dans la continuité de la première. En effet, l'objectif de ce laboratoire est d'observer l'influence d'un régulateur PID sur le système. Premièrement, le régulateurs PID est tuner avec les valeurs trouvées au laboratoire 1 (K0, Ti0, Td0). Ensuite, nous avons fait varier ces paramètres pour observer leur influence respective. Ces observations, présentées sous forme de neuf essais, seront ensuite comparées entre elles. 
+Cette séance continue à batir sur ce que nous avons trouvé durant la première séance,
+en observant l'influence des gains d'un régulateur PID sur notre système. 
+Nous alons donc faire plusieurs essais en faisant varier les gains et en comparant
+les réponses du sytème régulé, afin de pouvoir visualiser et tirer des conclusions
+sur les effets des différents gains du régulateur PID.
+ 
 
 \subsection{Essais}
-Attention, le gain utilisé ici comme gain K0 n'est pas le gain trouvé au laboratoire 1 par la méthode CHR. Ce dernier étant trop faible (effet de l'imprécision sur la détermination de $T_{U}$ et $T_{G}$) on a décidé de prendre $K0 = 1.5 \cdot$ Gain du premier laboratoire. Cette valeur est celle utilisée pour l'ensemble des essais de ce laboratoire.\\
+A la suite de la première séance, nous avons trouvés les valeurs de gains suivants
+à l'aide de la méthode de Chien - Hrones - Reswick:
 
-Les paramètres trouvé par la méthode CHR au premier laboratoire ont pour valeurs : 
-\begin{itemize}
-\item K0  = 4.118
-\item Ti0 = 145.830
-\item Td0 = 15.662 et Tf0 = 1.041
-\end{itemize}
+\begin{center}
+    $K_0  = 4.118$
+    \hspace{1cm}
+    $T_{i0} = 145.830$
+    \hspace{1cm}
+    $T_{d0} = 15.662$
+    \hspace{1cm}
+    $T_{f0} = 1.041$
+\end{center}
 
-Le K0 utilisé durant cette séance a donc pour valeur $4.118 \cdot 1.5 = 6.177$
+\paragraph{\textcolor{red}{Attention:}}\mbox{}\\
+Le \textcolor{red}{gain proportionnel} $K_0$ que nous avons trouvé à l'aide de la méthode de 
+Chien - Hrones - Reswick était relativement faible, du à l'imprécision 
+sur la détermination graphique de $T_{U}$ et $T_{G}$. Durant le premier essai,
+décrit dans la section \ref{essai-0}, nous avons constaté que le système mettait
+énormément de temps à se stabiliser. Nous avons mit plus de \textcolor{red}{35 min}
+a terminer cet essai. Nous avons donc décider d'augmenter ce coefficient pour le
+reste des manipulations, afin de pouvoir terminer les 9 essais dans les temps.\\
 
-\begin{itemize}
-\item Essais 0 - s2e0 - 0.66Ko Tio Tdo\\
-Comme expliqué dans l'introduction, le K0 utilisé ici un multiple de celui calculé au premier laboratoire. Cette essais ci visant à observer le comportement des valeurs du premier laboratoire, nous avons ajouter le coefficient de 0.66 pour retrouver le K0 du premier laboratoire.
+Soit si on indique le gain trouvé initialement par $K_0'$, nous avons décider de 
+prendre comme gain $$K_0 = 1.5 \cdot K_0' = 6.177$$
 
-\item Essais 1 - s2e1 - K0 Ti0 Td0
 
-\item Essais 2 - pas fait - 0.5K0 Ti0 Td0 
+\subsubsection{Essai 0 - s2e0 - 0.66Ko Tio Tdo} \label{essai-0}
+Comme mentionné dans le paragraph précédent, le premier essai s'est fait avec
+la valeur initiale $K_0'$ trouvée par la méthode de Chien - Hrones - Reswick.
+Cependant comme nous avons corrigé le gain de base $K_0$ après cette essai, nous
+utiliseront cette essai, avec $K = 0.66 \cdot K_0$, comme l'essai qu'il fallait
+avec un gain $K = 0.5 \cdot K_0$.
 
-\item Essais 3 - s2e3 - K0- 100000 Td0
+\subsubsection{Essai 1 - s2e1 - K0 Ti0 Td0}
 
-\item Essais 4 - s2e4 - K0 - 100000 0.001
+\subsubsection{Essai 2 - pas fait - 0.5K0 Ti0 Td0 }
 
-\item Essais 5 - s2e5 - 0.5K0 - 100000 0.001
+\subsubsection{Essai 3 - s2e3 - K0- 100000 Td0}
 
-\item Essais 6 - s2e6 - K0 - Ti0 2Td0
+\subsubsection{Essai 4 - s2e4 - K0 - 100000 0.001}
 
-\item Essais 7 - s2e7 - K0 - Ti0 4Td0
+\subsubsection{Essai 5 - s2e5 - 0.5K0 - 100000 0.001}
 
-\item Essais 8 - s2e8 - 8K0 - 100000 0.001
-\end{itemize}
+\subsubsection{Essai 6 - s2e6 - K0 - Ti0 2Td0}
+
+\subsubsection{Essai 7 - s2e7 - K0 - Ti0 4Td0}
+
+\subsubsection{Essai 8 - s2e8 - 8K0 - 100000 0.001}
+
 
 \subsection{Comparaison des essais}
 \textcolor{red}{Diagramme de Bode - Diagramme temporelle\\}
