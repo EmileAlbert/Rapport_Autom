@@ -190,6 +190,7 @@ Ensuite, comme l'erreur diminue rapidement, le terme proportionnel diminue égal
 Et la on peut voir l'effet du terme intégratif qui va progressivement venir
 diminuer l'erreur statique jusqu'à être stable au setpoint.
 
+\fig{essais/bode-0}{0.85}{Diagramme de Bode}
 
 \subsubsection{Essai 1 - s2e1 - K0 Ti0 Td0}
 
@@ -229,6 +230,8 @@ diminuer l'erreur statique jusqu'à être stable au setpoint.
 
 Dans cet essai, on peut voir que l'augmentation du terme proportionnel introduit
 une légère oscillation avant que le système se stabilise.
+
+\fig{essais/bode-1}{0.85}{Diagramme de Bode}
 
 \subsubsection{Essai 2 - pas fait - 0.5K0 Ti0 Td0 }
 L'essai 2 n'as pas été fait, comme nous avons pris le premier essai \ref{essai-0}
@@ -277,6 +280,8 @@ Malheureusement, nous avons fait une fausse manipulation et les données de
 cet essais n'ont pas été correctement enregistrées...
 }
 
+\fig{essais/bode-3}{0.85}{Diagramme de Bode}
+
 \subsubsection{Essai 4 - s2e4 - K0 - 100000 0.001}
 
 \begin{figure}[H]
@@ -318,6 +323,8 @@ On a donc un régulateur P, purement proportionnel. On peut voir que pour
 l'échelon, malgré l'oscillation importante, le système a réussi à se stabiliser
 sur la valeur du setpoint. Mais quand on regarde le graphe de la première perturbation,
 bien que les oscillations diminue, une erreur statique persiste.
+
+\fig{essais/bode-4}{0.85}{Diagramme de Bode}
 
 \subsubsection{Essai 5 - s2e5 - 0.5K0 - 100000 0.001}
 
@@ -362,6 +369,8 @@ le système se stabilise à la valeur désirée. Mais comme pour l'essai précé
 ceci est plus un coup de chance qu'autre chose. Quand la perturbation est à nouveau
 supprimée, on peut voir que l'erreur statique est à nouveau présente.
 
+\fig{essais/bode-5}{0.85}{Diagramme de Bode}
+
 \subsubsection{Essai 6 - s2e6 - K0 - Ti0 2Td0}
 
 \begin{figure}[H]
@@ -401,6 +410,8 @@ supprimée, on peut voir que l'erreur statique est à nouveau présente.
 En augmentant l'apport du terme dérivatif, on peut remarquer que la commande
 est considérablement plus bruitée. Par contre, on peut apercevoir un effet 
 bénéfique dans la réaction au perturbations, où la courbe est plus aplatie.
+
+\fig{essais/bode-6}{0.85}{Diagramme de Bode}
 
 \subsubsection{Essai 7 - s2e7 - K0 - Ti0 4Td0}
 
@@ -442,6 +453,8 @@ En augmentant trop le coefficient du terme dérivatif, le système frôle l'inst
 Les oscillations ont tendances à parfois diminuer, parfois augmenter. Dans le dernier
 cas, le système s'emballe et est instable.
 
+\fig{essais/bode-7}{0.85}{Diagramme de Bode}
+
 \subsubsection{Essai 8 - s2e8 - 8K0 - 100000 0.001}
 
 \begin{figure}[H]
@@ -467,6 +480,8 @@ On peut voir que le régulateur sature une fois dans un sens, une fois dans l'au
 Comme les oscillations étaient grandes et n'allaient pas se résorber, nous
 n'avons pas trouvé utiles d'appliquer les perturbations, car aucune conclusion
 utile aurait pu en être déduite.
+
+\fig{essais/bode-8}{0.85}{Diagramme de Bode}
 
 \subsection{Comparaison des essais}
 \textcolor{red}{Diagramme de Bode - Diagramme temporelle\\}

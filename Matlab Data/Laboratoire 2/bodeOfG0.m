@@ -1,4 +1,4 @@
-function a = bodeOfG0(Kp,Ti,Td,v)
+function a = bodeOfG0(Kp,Ti,Td,v, name)
 figure
 s = tf('s');
 Hvdg = (0.98*exp(-s*14.97))/((s*14.74+1)*(s*7.12+1));
@@ -15,5 +15,6 @@ formatphi = 'Phi = %f';
 formatOmegaphi = 'OmegaPhi = %f rad/s';
 title({sprintf(formatAm,Am),sprintf(formatOmegaA,OmegaA),sprintf(formatphi,phi),sprintf(formatOmegaphi,Omegaphi)});
 grid on
+print(name, '-dpng');
 end
 
