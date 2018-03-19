@@ -1,11 +1,11 @@
 experiments = [ 
-    struct('filename', "s2e0.mat", 'i_pert_up', 900, 'i_pert_down', 1680)
-    struct('filename', "s2e1.mat", 'i_pert_up', 560, 'i_pert_down', 850)
-    struct('filename', "s2e3.mat", 'i_pert_up', 560, 'i_pert_down', 850)
-    struct('filename', "s2e4.mat", 'i_pert_up', 1060, 'i_pert_down', 1610)
-    struct('filename', "s2e5.mat", 'i_pert_up', 540, 'i_pert_down', 970)
-    struct('filename', "s2e6.mat", 'i_pert_up', 1150, 'i_pert_down', 1670)
-    struct('filename', "s2e7.mat", 'i_pert_up', 1010, 'i_pert_down', 1530)
+    struct('filename', "s2e0.mat", 'i_pert_up', 890, 'i_pert_down', 1670)
+    struct('filename', "s2e1.mat", 'i_pert_up', 550, 'i_pert_down', 840)
+    struct('filename', "s2e3.mat", 'i_pert_up', 550, 'i_pert_down', 840) % A refaire...
+    struct('filename', "s2e4.mat", 'i_pert_up', 1050, 'i_pert_down', 1600)
+    struct('filename', "s2e5.mat", 'i_pert_up', 510, 'i_pert_down', 956)
+    struct('filename', "s2e6.mat", 'i_pert_up', 1150, 'i_pert_down', 1690)
+    struct('filename', "s2e7.mat", 'i_pert_up', 1000, 'i_pert_down', 1510)
     struct('filename', "s2e8.mat", 'i_pert_up', 623, 'i_pert_down', 623)
 ];
 
@@ -30,56 +30,61 @@ for f = experiments'
     min_y_c = min([ min(step.u), min(pert_up.u), min(pert_down.u) ]) - 5;
     max_y_c = max([ max(step.u), max(pert_up.u), max(pert_down.u) ]) + 5;
     
-    figure;
-    subplot(2,3,1);
-    plot(step.t, step.y, step.t, step.ysp)
+    figure('visible','off');;
+    plot(step.t, step.y, step.t, step.ysp);
     title('Echelon (sortie & setpoint)');
     xlim([step.t(1) step.t(end)]);
     ylim([min_y, max_y]);
     xlabel('temps [s]');
     ylabel('temperature [%]');
+    print(extractBefore(filename, ".mat") + '-step-out', '-dpng');
     
-    subplot(2,3,4);
-    plot(step.t , step.u)
+    figure('visible','off');;
+    plot(step.t , step.u);
     title('Echelon (commande)');
     xlim([step.t(1) step.t(end)]);
     ylim([min_y_c, max_y_c]);
     xlabel('temps [s]');
     ylabel('courant [%]');
+    print(extractBefore(filename, ".mat") + '-step-command', '-dpng');
     
     if pert_up.t(1) <  pert_up.t(end)
-        subplot(2,3,2);
-        plot(pert_up.t, pert_up.y, pert_up.t, pert_up.ysp)
+        figure('visible','off');;
+        plot(pert_up.t, pert_up.y, pert_up.t, pert_up.ysp);
         title('Perturbation 1 (sortie & setpoint)');
         xlim([pert_up.t(1) pert_up.t(end)]);
         ylim([min_y, max_y]);
         xlabel('temps [s]');
         ylabel('temperature [%]');
+        print(extractBefore(filename, ".mat") + '-pert-up-out', '-dpng');
 
-        subplot(2,3,5);
-        plot(pert_up.t , pert_up.u)
+        figure('visible','off');;
+        plot(pert_up.t , pert_up.u);
         title('Perturbation 1 (commande)');
         xlim([pert_up.t(1) pert_up.t(end)]);
         ylim([min_y_c, max_y_c]);
         xlabel('temps [s]');
         ylabel('courant [%]');
-
-        subplot(2,3,3);
-        plot(pert_down.t, pert_down.y, pert_down.t, pert_down.ysp)
+        print(extractBefore(filename, ".mat") + '-pert-up-command', '-dpng');
+        
+        figure('visible','off');;
+        plot(pert_down.t, pert_down.y, pert_down.t, pert_down.ysp);
         title('Perturbation 2 (sortie & setpoint)');
         xlim([pert_down.t(1) pert_down.t(end)]);
         ylim([min_y, max_y]);
         xlabel('temps [s]');
         ylabel('temperature [%]');
+        print(extractBefore(filename, ".mat") + '-pert-down-out', '-dpng');
     
-        subplot(2,3,6);
-        plot(pert_down.t , pert_down.u)
+        figure('visible','off');;
+        plot(pert_down.t , pert_down.u);
         title('Perturbation 2 (commande)');
         xlim([pert_down.t(1) pert_down.t(end)]);
         ylim([min_y_c, max_y_c]);
         xlabel('temps [s]');
         ylabel('courant [%]');
+        print(extractBefore(filename, ".mat") + '-pert-down-command', '-dpng');
     end
     
-    savefig(filename + '.fig');
+    %savefig(filename + '.fig');
 end
