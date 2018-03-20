@@ -1,0 +1,47 @@
+\centering
+    
+   \tikzstyle{block} = [draw, fill=blue!20, rectangle, minimum height=3em, minimum width=6em]
+   \tikzstyle{sum} = [draw, fill=blue!20, circle, node distance=1cm]
+   \tikzstyle{input} = [coordinate]
+   \tikzstyle{output} = [coordinate]
+   \tikzstyle{tmp} = [coordinate]
+   \tikzstyle{pinstyle} = [pin edge={to-,thin,black}]
+
+    \begin{tikzpicture}[auto, node distance=2cm,>=latex']
+        % Blocks
+        \node [input, name=input] {};
+        \node [sum, right of=input] (sum) {};
+        \node [block, right of=sum, node distance=3cm] (regulator1) {$R_{1}(s)$};
+        \node [sum, right of=regulator1, node distance=3cm] (sum2) {};
+        \node [block, right of=sum2, node distance=3cm] (system1) {$H_{1}(s)$};
+        \node [sum, right of=system1, node distance=3cm] (sum3) {}; 
+        \node [output, right of=sum3, node distance=1cm] (output) {};
+		
+		\node [block, above of=sum2] (regulator2) {$R_{2}(s)$};
+		\node [block, above of=sum3] (system2) {$H_{2}(s)$};
+		
+		\node [sum, above of=system2, node distance=2cm] (sum4) {}; 
+		\node [input, name=input2, above of=sum4, node distance=1cm]{}; 
+		
+        % Basic Flow
+        \draw [->] (input) -- node [name=a] {$y_{sp}$}(sum);
+        \draw [->] (sum) -- (regulator1);   
+        \draw [->] (regulator1) -- (sum2);
+        \draw [->] (sum2) -- (system1);
+        \draw [->] (system1) -- (sum3);
+        \draw [->] (sum3) -- node [name=c] {$y_{pv}$}(output);
+        
+        \draw [->] (regulator2) -- (sum2);
+        \draw [->] (system2) --(sum3);
+        \draw [->] (sum4) --(system2);
+        \draw [->] (input2) -- node [name=d] {$v_vent$}(sum4);
+
+        \node [tmp, above of=regulator2, node distance=2cm] (link_tmp) {};
+        \draw (sum4) -- (link_tmp);
+        \draw [->] (link_tmp) -- (regulator2);
+        
+        % feedback sum3 vers sum
+        % \node [tmp, above of=regulator2, node distance=2cm] (link_tmp) {}; 
+        % \node [tmp, above of=regulator2, node distance=2cm] (link_tmp) {};        
+        % node[pos=0.99] {$-$}
+    \end{tikzpicture}

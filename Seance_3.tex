@@ -1,2 +1,87 @@
 \section{Séance 3 : Feed-Forward}
 \subsection{Introduction}
+But de la séance : observer le feed-forward pour contrer des perturbations injectées dans le systèmes. Une action en feed-forward bien paramétrer doit rendre invisibles une perturbation pour la sortie du système.\\
+
+Pour paramétrer ce type d'action, on a besoin d'un régulateur optimisé. Sur base des essais réalisé au dernier laboratoire, plusieurs groupes de paramètres on été testé pour tendre vers un régulateur efficace. \\
+
+Nous avons choisi de partir du régulateur testé lors de l'essai 1 de la première séance. A partir de ses paramètres, à l'instinct, nous avons aboutit sur un régulateur optimisé. En agissant sur les paramètres, on a influencé le dépassement (10-15\% grand max), les oscillations induite dans le système, ce qui a influencé par conséquence le temps d'atteinte de la consigne (nous avons visé les 200 s)
+
+Les différents jeux de paramètres pour chaque itérations vers le régulateur optimisé sont listés ci-dessous : 
+\begin{enumerate}
+\item $K_{p} = 10$, $T_{i} = 150$ et $T_{d} = 15$
+\item $K_{p} = 20$, $T_{i} = 150$ et $T_{d} = 15$
+\item $K_{p} = 15$, $T_{i} = 150$ et $T_{d} = 7$
+\item $K_{p} = 10$, $T_{i} = 150$ et $T_{d} = 7$
+\item $K_{p} = 10$, $T_{i} = 150$ et $T_{d} = 11$
+\item $K_{p} = 12$, $T_{i} = 100$ et $T_{d} = 13$
+\item $K_{p} = 17$, $T_{i} = 100$ et $T_{d} = 13$
+\item $K_{p} = 20$, $T_{i} = 100$ et $T_{d} = 10$
+\item $K_{p} = 25$, $T_{i} = 80$ et $T_{d} = 12$
+\item $K_{p} = 35$, $T_{i} = 80$ et $T_{d} = 12$\\
+En augmentant seulement le $K_{p}$ on atteint pas la consigne lors de la première montée - oscillations 
+
+\item $K_{p} = 6$, $T_{i} = 150$ et $T_{d} = 8$\\
+Un gain trop important fait rentrer beaucoup plus le régulateur en saturation. Le fait que le système rentre en saturation n'aide pas à obtenir une réponse correcte
+
+\item $K_{p} = 4$, $T_{i} = 80$ et $T_{d} = 8$
+
+\item $K_{p} = 4.5$, $T_{i} = 65$ et $T_{d} = 10$\\
+En deux oscillations on est à la consigne 
+
+\item $K_{p} = 4.5$, $T_{i} = 65$ et $T_{d} = 15$
+\item \textbf{\textcolor{green}{$K_{p} = 4.5$, $T_{i} = 65$ et $T_{d} = 12.5$}}
+\end{enumerate}
+
+\subsection{Manipulation - Feed-Forward}
+Vitesse du ventilateur vu comme une perturbation  qui va affecter la sortie du système. La sortie est donc une combinaison de l'influence du courant dans la résistance chauffante et de la vitesse du ventilateur (avec sa dynamique propre - cela implique une fonction de transfert)\\
+
+Le but est de compenser la perturbation de la vitesse du ventilateur en jouant sur le courant dans la résistance (en appliquant l'inverse de la fonction de la perturbation. Dans ce cas, la perturbation serait invisible sur la sortie\\
+
+Pour pouvoir implémenter cette solution, on a besoin de mesurer la perturbation. La perturbation devient une entrée pour le régulateur aussi\\
+
+\begin{figure}
+	\input{Seance_2_SCH}
+    \caption{Schéma bloc du système avec le régulateur de suivis de consigne et de réjection des perturbation}
+\end{figure}
+
+
+\begin{align}
+y_{pv} &= u \cdot H_{1}(s) + d \cdot H_{2}(s)\\
+	   &= d \cdot R_{2} \cdot H_{1} + d \cdot H_{2}\\
+	   &= d \cdot (R_{2} \cdot H_{1} + H_{2})\\
+	   &= 0
+\end{align}
+
+\begin{equation}
+H_{2} = R_{2} \cdot H_{1} \leftrightarrow R_{2} = \frac{-H_{2}}{H_{1}}
+\end{equation}
+
+Avec $R_{2}$ le deuxième régulateur connecté à la mesure de la perturbation et $d$ la perturbation (\textit{disturbate})
+
+Le modèle de $H_{1}$ étant le modèle de Vander Grinten, c'est aussi le modèle que l'on va utiliser pour $H_{2}$
+
+\begin{equation}
+H_{1} =  \frac{k_{1} \cdot e^{-sT_{m1}}}{(sT_{11} + 1) \cdot (sT_{12} + 1)}
+\end{equation}
+
+\begin{equation}
+H_{2} =  \frac{k_{2} \cdot e^{-sT_{m2}}}{(sT_{21} + 1) \cdot (sT_{22} + 1)}
+\end{equation}
+
+
+Par le schéma du système, on trouve les relations liant les fonctions de transfert et les régulateurs. On peut donc poser les relations suivantes :
+
+\begin{align}
+R_{2} &\rightarrow \frac{-k_{1}}{k_{2}} = gain\\
+	  &\rightarrow e^{-s(T_{m1} - T_{m2})}\\
+	  &\rightarrow \frac{(sT_{11} + 1) \cdot (sT_{12} + 1)}{(sT_{21} + 1) \cdot (sT_{22} + 1)}\\
+\end{align}
+
+Condition pour implémenter le Feed Forward
+\begin{itemize}
+\item Ordre de $H_{2}$ doit être égale à l'ordre de $H_{1}$
+\item Le temps mort du régulateur 2 doit être plus faible que le temps de la perturbations sur la sortie (on doit calculer et agir sur la sortie au minimum en même temps que la perturbation si on veut la rendre invisible)
+\item On doit pouvoir mesurer la perturbation
+\end{itemize}
+
+Le problème est que le régulateur 2 ne suis aps la consigne, il n'est la que pour rejeter la consigne. Cela implique que nous devons ajouter un régulateur pour suivre la consigne et rejeter les perturbations autres que celle mesurée. Le régulateur de suivis de consigne est celui dimensionner lors des séances précédentes. 
