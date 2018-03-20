@@ -138,7 +138,7 @@ Soit si on indique le gain trouvé initialement par $K_0'$, nous avons décider 
 prendre comme gain $$K_0 = 1.5 \cdot K_0' = 6.177$$
 
 
-\subsubsection{Essai 0 - 0.66Ko Tio Tdo} \label{essai-0}
+\subsubsection{Essai 0 : $K_{p} = 0.66*K_{0}'$, $T_{i} = T_{i0}$ et $T_{d} = T_{d0}$} \label{essai-0}
 % Correspond aux mesures matlab s2e0
 Comme mentionné dans le paragraph précédent, le premier essai s'est fait avec
 la valeur initiale $K_0'$ trouvée par la méthode de Chien - Hrones - Reswick.
@@ -192,7 +192,8 @@ diminuer l'erreur statique jusqu'à être stable au setpoint.
 
 \fig{essais/bode-0}{0.85}{Diagramme de Bode}
 
-\subsubsection{Essai 1 - s2e1 - K0 Ti0 Td0}
+\subsubsection{Essai 1 : $K_{p} = K_{0}'$, $T_{i} = T_{i0}$ et $T_{d} = T_{d0}$}
+%Correspond au fichier s2e1 
 
 \begin{figure}[H]
     \centering
@@ -233,12 +234,12 @@ une légère oscillation avant que le système se stabilise.
 
 \fig{essais/bode-1}{0.85}{Diagramme de Bode}
 
-\subsubsection{Essai 2 - pas fait - 0.5K0 Ti0 Td0 }
+\subsubsection{Essai 2 : $K_{p} = 0.5*K_{0}'$, $T_{i} = T_{i0}$ et $T_{d} = T_{d0}$}
 L'essai 2 n'as pas été fait, comme nous avons pris le premier essai \ref{essai-0}
 qui le remplace.
 
-\subsubsection{Essai 3 - s2e3 - K0- 100000 Td0}
-
+\subsubsection{Essai 3 : $K_{p} = K_{0}'$, $T_{i} = 10^{5}$ et $T_{d} = T_{d0}$}
+%Correspond au fichier s2e3
 \begin{figure}[H]
     \centering
     % Line 1
@@ -282,7 +283,8 @@ cet essais n'ont pas été correctement enregistrées...
 
 \fig{essais/bode-3}{0.85}{Diagramme de Bode}
 
-\subsubsection{Essai 4 - s2e4 - K0 - 100000 0.001}
+\subsubsection{Essai 4 : $K_{p} = K_{0}'$, $T_{i} = 10^{5}$ et $T_{d} = 10^{-3}$}
+%Correspond au fichier s2e4
 
 \begin{figure}[H]
     \centering
@@ -326,7 +328,8 @@ bien que les oscillations diminue, une erreur statique persiste.
 
 \fig{essais/bode-4}{0.85}{Diagramme de Bode}
 
-\subsubsection{Essai 5 - s2e5 - 0.5K0 - 100000 0.001}
+\subsubsection{Essai 5 : $K_{p} = 0.5*K_{0}'$, $T_{i} = 10^{5}$ et $T_{d} = 10^{-3}$}
+%Correspond au fichier s2e5
 
 \begin{figure}[H]
     \centering
@@ -371,7 +374,9 @@ supprimée, on peut voir que l'erreur statique est à nouveau présente.
 
 \fig{essais/bode-5}{0.85}{Diagramme de Bode}
 
-\subsubsection{Essai 6 - s2e6 - K0 - Ti0 2Td0}
+\subsubsection{Essai 6 : $K_{p} = K_{0}'$, $T_{i} = T_{i0}$ et $T_{d} = 2*T_{d0}$}
+%Correspond au fichier s2e6
+
 
 \begin{figure}[H]
     \centering
@@ -413,7 +418,8 @@ bénéfique dans la réaction au perturbations, où la courbe est plus aplatie.
 
 \fig{essais/bode-6}{0.85}{Diagramme de Bode}
 
-\subsubsection{Essai 7 - s2e7 - K0 - Ti0 4Td0}
+\subsubsection{Essai 7 : $K_{p} = K_{0}$, $T_{i} = T_{i0}$ et $T_{d} = 4*T_{d0}$}
+%Correspond au fichier s2e7
 
 \begin{figure}[H]
     \centering
@@ -455,7 +461,8 @@ cas, le système s'emballe et est instable.
 
 \fig{essais/bode-7}{0.85}{Diagramme de Bode}
 
-\subsubsection{Essai 8 - s2e8 - 8K0 - 100000 0.001}
+\subsubsection{Essai 8 : $K_{p} = 8*K_{0}'$, $T_{i} = 10^{5}$ et $T_{d} = 10^{-3}$}
+%Correspond au fichier s2e8
 
 \begin{figure}[H]
     \centering
