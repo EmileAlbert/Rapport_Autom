@@ -1,0 +1,10 @@
+%open('PerturbationWithFeedForward.fig');
+%h1 = findobj(gca,'Type','line');
+%FW.out = get(h1,'ydata');
+%FW.sp = get(h1,'ydata');
+%FW.time = get(h1,'xdata');
+%open('PerturbationWithoutFeedForward.fig');
+h2 = findobj(gca,'Type','line');
+NoFW.out = get(h2,'ydata');
+%NoFW.sp = get(h2,'ydata');
+%NoFW.time = get(h2,'xdata');
