@@ -1,0 +1,12 @@
+c = containers.Map;
+formatSpec = 'essais%d';
+changedIndexes = diff(setpoint)~=0;
+index = find(changedIndexes == 1);
+bb
+for i = 1:size(index)(2)
+    str = sprintf(formatSpec,i);
+    essai.sp = setpoint(index(i)-10:index(i+1)+10);
+    essai.out = output(index(i)-10:index(i+1)+10);
+    essai.cons = consigne(index(i)-10:index(i+1)+10);
+    c(str) = essai;
+end

@@ -1,0 +1,2 @@
+open('tuning.fig');
+h2 = findobj(gca,'Type','line');
