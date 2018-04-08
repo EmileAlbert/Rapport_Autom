@@ -17,6 +17,8 @@ for essay = keys(dicOfTry)
     plot(dicOfTry(essay{1}).sp,'Color','r')
     legend('Sortie','Consigne','Location','SouthWest')
     xlim([0 last-first])
+    ylim([36 54])
+    grid on
     subplot(1,2,2,'Parent',p)
     title('Consigne de courant');
     xlabel('Temps[sec]');
@@ -27,6 +29,8 @@ for essay = keys(dicOfTry)
     line([10 10],yL,'Color','r');
     legend('Consigne',"Début de l'échelon",'Location','SouthWest')
     xlim([0 last-first])
+    grid on
     savefig(strcat(essay{1},'.fig'))
+    set(gcf,'PaperUnits','centimeters','PaperPosition',[0 0 28 10])
     saveas(gcf,strcat(essay{1},'.png'))
 end
