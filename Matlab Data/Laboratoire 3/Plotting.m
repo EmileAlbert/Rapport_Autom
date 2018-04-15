@@ -6,6 +6,7 @@ for essay = keys(dicOfTry)
     p.TitlePosition = 'centertop'; 
     p.FontSize = 12;
     p.FontWeight = 'bold';
+    p.BackgroundColor = [1 1 1];
     first=dicOfTry(essay{1}).time(1);
     last=dicOfTry(essay{1}).time(end);
     subplot(1,2,1,'Parent',p)

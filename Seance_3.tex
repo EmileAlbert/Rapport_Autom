@@ -1,38 +1,75 @@
 \section{Séance 3 : Feed-Forward}
 \subsection{Introduction}
-But de la séance : observer le feed-forward pour contrer des perturbations injectées dans le systèmes. Une action en feed-forward bien paramétrer doit rendre invisibles une perturbation pour la sortie du système.\\
+Le but de la séance est d'utiliser la technique du \textbf{feed-forward}. Une action de ce type, si elle bien paramétrées, rend invisibles une perturbation pour la sortie du système.La perturbation étudiée sera un changement de vitesse du ventilateur. Elle se présentera sous la forme d'un échelon 50 à 60\% de la vitesse maximale dudit ventilateur.\\
 
-Pour paramétrer ce type d'action, on a besoin d'un régulateur optimisé. Sur base des essais réalisé au dernier laboratoire, plusieurs groupes de paramètres on été testé pour tendre vers un régulateur efficace. \\
+Pour paramétrer ce type d'action, Il est primordiale d'avoir un régulateur optimisé. Sur base des essais réalisés au dernier laboratoire, plusieurs groupes de paramètres on été testé pour tendre vers un régulateur efficace. Pour ce faire, il a été choisi de partir du régulateur testé lors de l'essai 1 de la première séance. A partir de ces paramètres, nous avons aboutit sur un régulateur optimisé. Les résultats de cette démarche seront présentés sous forme d'une \textit{feuille de résultat} comprenant :
+\begin{itemize}
+\item Le graphe de la sortie du système 
+\item Le graphe de la consigne de courant appliquée par le régulateur.
+\item Les valeurs de constantes utilisées.
+\item Les commentaires influençant le choix des constantes de l'essai suivant.
+\end{itemize}
 
-Nous avons choisi de partir du régulateur testé lors de l'essai 1 de la première séance. A partir de ses paramètres, à l'instinct, nous avons aboutit sur un régulateur optimisé. En agissant sur les paramètres, on a influencé le dépassement (10-15\% grand max), les oscillations induite dans le système, ce qui a influencé par conséquence le temps d'atteinte de la consigne (nous avons visé les 200 s)
+Lorsque l'on désire paramétrer une action en feed-forward, il est nécessaire de connaitre la fonction de transfert de la perturbation. Celle-ci sera obtenue au moyen d'un programme d'optimisation. Le point \ref{FW} détaillera de manière plus précise la manière d'utiliser ce type d'action.\\ 
 
-Les différents jeux de paramètres pour chaque itérations vers le régulateur optimisé sont listés ci-dessous : 
-\begin{enumerate}
-\item $K_{p} = 10$, $T_{i} = 150$ et $T_{d} = 15$
-\item $K_{p} = 20$, $T_{i} = 150$ et $T_{d} = 15$
-\item $K_{p} = 15$, $T_{i} = 150$ et $T_{d} = 7$
-\item $K_{p} = 10$, $T_{i} = 150$ et $T_{d} = 7$
-\item $K_{p} = 10$, $T_{i} = 150$ et $T_{d} = 11$
-\item $K_{p} = 12$, $T_{i} = 100$ et $T_{d} = 13$
-\item $K_{p} = 17$, $T_{i} = 100$ et $T_{d} = 13$
-\item $K_{p} = 20$, $T_{i} = 100$ et $T_{d} = 10$
-\item $K_{p} = 25$, $T_{i} = 80$ et $T_{d} = 12$
-\item $K_{p} = 35$, $T_{i} = 80$ et $T_{d} = 12$\\
-En augmentant seulement le $K_{p}$ on atteint pas la consigne lors de la première montée - oscillations 
 
-\item $K_{p} = 6$, $T_{i} = 150$ et $T_{d} = 8$\\
-Un gain trop important fait rentrer beaucoup plus le régulateur en saturation. Le fait que le système rentre en saturation n'aide pas à obtenir une réponse correcte
+\subsection{Optimisation du régulateur}
+\begin{optibox}{essai1}{6}{150}{15}
+On peut observer que la consigne de courant sature. De ce fait, on observe que le système tend vers la consigne mais en oscillant.  Il a été décidé de réaliser l'essai suivant en augmentant la valeur de la constante proportionnelle.
+ \\\hline
+\end{optibox}
+\begin{optibox}{essai2}{10}{150}{15}
+La consigne de courant sature encore plus.
+Cependant, les essais 3 à 12 ne seront pas présenté car ils sont contre-productif. Une mauvaise compréhension de certains paramètres nous ont conduit à augmenter la valeur de $K_{p}$ jusque 30. Voyant que nous nous écartions d'une régulation efficace, il a été convenue de repartir de l'essai 1 pour poursuivre l'optimisation mais en diminuant seulement la valeur de $T_{d}$\\
+\hline
+\end{optibox}
+\begin{optibox}{essai13}{6}{150}{8}
+La consigne de courant ne sature plus mais on observe un grand dépassement. Les valeurs de $K_{p}$ et $T_{d}$ seront donc diminué pour l'essai suivant. La consigne n'étant pas atteinte après 270 secondes, l'essai à été avorté. 
+\\\hline
+\end{optibox}
+\begin{optibox}{essai14}{4}{80}{8}
+La consigne de température étant atteinte et la dépassement étant faible, la composante intégrative sera diminuer et la facteur de dérivation sera quant à lui augmenté pour essayer d'accélérer la régulation du système.
+ \\\hline
+\end{optibox}
+\begin{optibox}{essai15}{4}{65}{10}
+La consigne de température est atteinte en deux oscillations et en 200 secondes. Pour diminuer l'oscillation on augmente encore le  $T_{d}$. On augmentera aussi un tout petit peu la facteur proportionnelle pour diminuer en même temps le dépassement.\\\hline
+\end{optibox}
+\begin{optibox}{essai16}{4.5}{65}{15}
+La sortie du système ne présente plus de dépassement mais la consigne est atteinte plus lentement qu'a l'essai précédent. La valeur de $T_{d}$ sera légèrement diminuée.
+\\\hline
+\end{optibox}
+\begin{optibox}{essai17}{4.5}{65}{12.5}
+Le dépassement est très faible et la température souhaitée est atteinte en moins de 200 secondes. 
+Les paramètres de cet essai seront utilisé pour comme constante du régulateur optimisé.
+\\\hline
+\end{optibox}
 
-\item $K_{p} = 4$, $T_{i} = 80$ et $T_{d} = 8$
 
-\item $K_{p} = 4.5$, $T_{i} = 65$ et $T_{d} = 10$\\
-En deux oscillations on est à la consigne 
-
-\item $K_{p} = 4.5$, $T_{i} = 65$ et $T_{d} = 15$
-\item \textbf{\textcolor{green}{$K_{p} = 4.5$, $T_{i} = 65$ et $T_{d} = 12.5$}}
-\end{enumerate}
+%DATA.
+%\begin{itemize}
+%\item $K_{p} = 20$, $T_{i} = 150$ et $T_{d} = 15$(4)
+%\item $K_{p} = 15$, $T_{i} = 150$ et $T_{d} = 7$(5)
+%\item $K_{p} = 10$, $T_{i} = 150$ et $T_{d} = 7$(6)
+%\item $K_{p} = 10$, $T_{i} = 150$ et $T_{d} = 11$(7)
+%\item $K_{p} = 12$, $T_{i} = 100$ et $T_{d} = 13$(8)
+%\item $K_{p} = 17$, $T_{i} = 100$ et $T_{d} = 13$(9)
+%\item $K_{p} = 20$, $T_{i} = 100$ et $T_{d} = 10$(10)
+%\item $K_{p} = 25$, $T_{i} = 80$ et $T_{d} = 12$(11)
+%\item $K_{p} = 35$, $T_{i} = 80$ et $T_{d} = 12$(12)
+%\item $K_{p} = 6$, $T_{i} = 150$ et $T_{d} = 8$(13)\\
+%\item $K_{p} = 4$, $T_{i} = 80$ et $T_{d} = 8$(14)
+%\item $K_{p} = 4.5$, $T_{i} = 65$ et $T_{d} = 10$(15)
+%\item $K_{p} = 4.5$, $T_{i} = 65$ et $T_{d} = 15$(16)
+%\item \textbf{\textcolor{green}{$K_{p} = 4.5$, $T_{i} = 65$ et $T_{d} = 12.5$}}(17)
+%\end{itemize}
+\subsection{Fonction de transfert}
+\subsubsection{Fonction de transfert du système}
+\begin{center}\includegraphics[scale=0.8]{optimisation/H1.png}\end{center}
+\subsubsection{Fonction de transfert de la perturbation}
+\begin{center}\includegraphics[scale=0.8]{optimisation/H2.png}\end{center}
 
 \subsection{Manipulation - Feed-Forward}
+\label{FW}
 Vitesse du ventilateur vu comme une perturbation  qui va affecter la sortie du système. La sortie est donc une combinaison de l'influence du courant dans la résistance chauffante et de la vitesse du ventilateur (avec sa dynamique propre - cela implique une fonction de transfert)\\
 
 Le but est de compenser la perturbation de la vitesse du ventilateur en jouant sur le courant dans la résistance (en appliquant l'inverse de la fonction de la perturbation. Dans ce cas, la perturbation serait invisible sur la sortie\\

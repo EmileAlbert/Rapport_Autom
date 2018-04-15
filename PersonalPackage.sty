@@ -107,4 +107,29 @@
 	\end{figure}
 }	
 
+\usepackage{tabularx}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usetikzlibrary{arrows}
+\newenvironment{optibox}[4]
+{\tabularx{\textwidth}{|>{\setlength\hsize{0.5\hsize}\setlength\linewidth{\hsize}}X | >{\setlength\hsize{1.5\hsize}\setlength\linewidth{\hsize}}X | }
+\hline 
+\multicolumn{2}{|@{}c|}{}\\
+\multicolumn{2}{|@{}c|}{ \includegraphics[width=0.9\columnwidth]{Optimisation/#1.png}}\\
+\multicolumn{2}{|@{}c|}{}\\
+\hline
+Constantes : & Commentaires : \\
+\hline
+\begin{itemize}
+\item $K_{p} =#2$
+\item $T_{i} = #3$
+\item $T_{d} = #4 $
+\end{itemize} & 
+} 
+{
+\endtabularx
+\\[1cm]
+}
+
+
 \endinput
