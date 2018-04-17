@@ -2,7 +2,7 @@
 \subsection{Introduction}
 Le but de la séance est d'utiliser la technique du \textbf{feed-forward}. Une action de ce type, si elle bien paramétrées, rend invisibles une perturbation pour la sortie du système.La perturbation étudiée sera un changement de vitesse du ventilateur. Elle se présentera sous la forme d'un échelon 50 à 60\% de la vitesse maximale dudit ventilateur.\\
 
-Pour paramétrer ce type d'action, Il est primordiale d'avoir un régulateur optimisé. Sur base des essais réalisés au dernier laboratoire, plusieurs groupes de paramètres on été testé pour tendre vers un régulateur efficace. Pour ce faire, il a été choisi de partir du régulateur testé lors de l'essai 1 de la première séance. A partir de ces paramètres, nous avons aboutit sur un régulateur optimisé. Les résultats de cette démarche seront présentés sous forme d'une \textit{feuille de résultat} comprenant :
+Pour paramétrer ce type d'action, il est primordial d'avoir un régulateur optimisé. Sur base des essais réalisés au dernier laboratoire, plusieurs groupes de paramètres ont été testés pour tendre vers un régulateur efficace. Pour ce faire, il a été choisi de partir du régulateur testé lors de l'essai 1 de la première séance. À partir de ces paramètres, nous avons abouti sur un régulateur optimisé. Les résultats de cette démarche seront présentés sous forme d'une \textit{feuille de résultat} comprenant :
 \begin{itemize}
 \item Le graphe de la sortie du système 
 \item Le graphe de la consigne de courant appliquée par le régulateur.
@@ -16,31 +16,37 @@ Lorsque l'on désire paramétrer une action en feed-forward, il est nécessaire 
 \subsection{Optimisation du régulateur}
 \begin{optibox}{essai1}{6}{150}{15}
 On peut observer que la consigne de courant sature. De ce fait, on observe que le système tend vers la consigne mais en oscillant.  Il a été décidé de réaliser l'essai suivant en augmentant la valeur de la constante proportionnelle.
- \\\hline
+\\\hline
 \end{optibox}
-\begin{optibox}{essai2}{10}{150}{15}
+\
+begin{optibox}{essai2}{10}{150}{15}
 La consigne de courant sature encore plus.
-Cependant, les essais 3 à 12 ne seront pas présenté car ils sont contre-productif. Une mauvaise compréhension de certains paramètres nous ont conduit à augmenter la valeur de $K_{p}$ jusque 30. Voyant que nous nous écartions d'une régulation efficace, il a été convenue de repartir de l'essai 1 pour poursuivre l'optimisation mais en diminuant seulement la valeur de $T_{d}$\\
+Cependant, les essais 3 à 12 ne seront pas présentés car ils sont contre-productifs. Une mauvaise compréhension de certains paramètres nous ont conduits à augmenter la valeur de $K_{p}$ jusque 30. Voyant que nous nous écartions d'une régulation efficace, il a été convenue de repartir de l'essai 1 pour poursuivre l'optimisation mais en diminuant seulement la valeur de $T_{d}$\\
 \hline
 \end{optibox}
+
 \begin{optibox}{essai13}{6}{150}{8}
-La consigne de courant ne sature plus mais on observe un grand dépassement. Les valeurs de $K_{p}$ et $T_{d}$ seront donc diminué pour l'essai suivant. La consigne n'étant pas atteinte après 270 secondes, l'essai à été avorté. 
+La consigne de courant ne sature plus mais on observe un grand dépassement. Les valeurs de $K_{p}$ et $T_{d}$ seront donc diminué pour l'essai suivant. La consigne n'étant pas atteinte après 270 secondes, l'essai a été avorté. 
 \\\hline
 \end{optibox}
+
 \begin{optibox}{essai14}{4}{80}{8}
-La consigne de température étant atteinte et la dépassement étant faible, la composante intégrative sera diminuer et la facteur de dérivation sera quant à lui augmenté pour essayer d'accélérer la régulation du système.
+La consigne de température étant atteinte et le dépassement étant faible, la composante intégrative sera diminuée et le facteur de dérivation sera quant à lui augmenté pour essayer d'accélérer la régulation du système.
  \\\hline
 \end{optibox}
+
 \begin{optibox}{essai15}{4}{65}{10}
-La consigne de température est atteinte en deux oscillations et en 200 secondes. Pour diminuer l'oscillation on augmente encore le  $T_{d}$. On augmentera aussi un tout petit peu la facteur proportionnelle pour diminuer en même temps le dépassement.\\\hline
+La consigne de température est atteinte en deux oscillations et en 200 secondes. Pour diminuer l'oscillation on augmente encore le  $T_{d}$. On augmentera aussi un tout petit peu le facteur proportionnel pour diminuer en même temps le dépassement.\\\hline
 \end{optibox}
+
 \begin{optibox}{essai16}{4.5}{65}{15}
-La sortie du système ne présente plus de dépassement mais la consigne est atteinte plus lentement qu'a l'essai précédent. La valeur de $T_{d}$ sera légèrement diminuée.
+La sortie du système ne présente plus de dépassement mais la consigne est atteinte plus lentement qu'à l'essai précédent. La valeur de $T_{d}$ sera légèrement diminuée.
 \\\hline
 \end{optibox}
+
 \begin{optibox}{essai17}{4.5}{65}{12.5}
 Le dépassement est très faible et la température souhaitée est atteinte en moins de 200 secondes. 
-Les paramètres de cet essai seront utilisé pour comme constante du régulateur optimisé.
+Les paramètres de cet essai seront utilisés pour comme constante du régulateur optimisé.
 \\\hline
 \end{optibox}
 
@@ -62,6 +68,7 @@ Les paramètres de cet essai seront utilisé pour comme constante du régulateur
 %\item $K_{p} = 4.5$, $T_{i} = 65$ et $T_{d} = 15$(16)
 %\item \textbf{\textcolor{green}{$K_{p} = 4.5$, $T_{i} = 65$ et $T_{d} = 12.5$}}(17)
 %\end{itemize}
+
 \subsection{Fonction de transfert}
 \subsubsection{Fonction de transfert du système}
 \begin{center}\includegraphics[scale=0.8]{optimisation/H1.png}\end{center}
@@ -77,8 +84,8 @@ Le but est de compenser la perturbation de la vitesse du ventilateur en jouant s
 Pour pouvoir implémenter cette solution, on a besoin de mesurer la perturbation. La perturbation devient une entrée pour le régulateur aussi\\
 
 \begin{figure}
-	\input{Seance_2_SCH}
-    \caption{Schéma bloc du système avec le régulateur de suivis de consigne et de réjection des perturbation}
+\input{Seance_2_SCH}
+\caption{Schéma bloc du système avec le régulateur de suivis de consigne et de réjection des perturbation}s
 \end{figure}
 
 
@@ -117,8 +124,8 @@ R_{2} &\rightarrow \frac{-k_{1}}{k_{2}} = gain\\
 Condition pour implémenter le Feed Forward
 \begin{itemize}
 \item Ordre de $H_{2}$ doit être égale à l'ordre de $H_{1}$
-\item Le temps mort du régulateur 2 doit être plus faible que le temps de la perturbations sur la sortie (on doit calculer et agir sur la sortie au minimum en même temps que la perturbation si on veut la rendre invisible)
+\item Le temps mort du régulateur 2 doit être plus faible que le temps de la perturbation sur la sortie (on doit calculer et agir sur la sortie au minimum en même temps que la perturbation si on veut la rendre invisible)
 \item On doit pouvoir mesurer la perturbation
 \end{itemize}
 
-Le problème est que le régulateur 2 ne suis aps la consigne, il n'est la que pour rejeter la consigne. Cela implique que nous devons ajouter un régulateur pour suivre la consigne et rejeter les perturbations autres que celle mesurée. Le régulateur de suivis de consigne est celui dimensionner lors des séances précédentes. 
+Le problème est que le régulateur 2 ne suit pas la consigne, il n'est la que pour rejeter la consigne. Cela implique que nous devons ajouter un régulateur pour suivre la consigne et rejeter les perturbations autres que celle mesurée. Le régulateur de suivis de consigne est celui dimensionner lors des séances précédentes. 
