@@ -23,6 +23,9 @@
 		\node [sum, above of=system2, node distance=2cm] (sum4) {}; 
 		\node [input, name=input2, above of=sum4, node distance=1cm]{}; 
 		
+		\node [block, left of=system1, node distance=3cm] (system1) {u};
+		\node [block, left of=system1, node distance=3cm] (system1) {d};
+		
         % Basic Flow
         \draw [->] (input) -- node [name=a] {$y_{sp}$}(sum);
         \draw [->] (sum) -- (regulator1);   
@@ -34,7 +37,7 @@
         \draw [->] (regulator2) -- (sum2);
         \draw [->] (system2) --(sum3);
         \draw [->] (sum4) --(system2);
-        \draw [->] (input2) -- node [name=d] {$v_vent$}(sum4);
+        \draw [->] (input2) -- node [name=d] {$d     v_vent$}(sum4);
 
         \node [tmp, above of=regulator2, node distance=2cm] (link_tmp) {};
         \draw (sum4) -- (link_tmp);
