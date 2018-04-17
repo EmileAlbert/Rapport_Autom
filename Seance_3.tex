@@ -1,6 +1,6 @@
 \section{Séance 3 : Feed-Forward}
 \subsection{Introduction}
-Le but de la séance est d'utiliser la technique du \textbf{feed-forward}. Une action de ce type, si elle bien paramétrées, rend invisibles une perturbation pour la sortie du système.La perturbation étudiée sera un changement de vitesse du ventilateur. Elle se présentera sous la forme d'un échelon 50 à 60\% de la vitesse maximale dudit ventilateur.\\
+Le but de la séance est d'utiliser la technique du \textbf{feed-forward}. Une action de ce type, si elle bien paramétrées, rend invisibles une perturbation pour la sortie du système. La perturbation étudiée sera un changement de vitesse du ventilateur. Elle se présentera sous la forme d'un échelon 50 à 60\% de la vitesse maximale dudit ventilateur.\\
 
 Pour paramétrer ce type d'action, il est primordial d'avoir un régulateur optimisé. Sur base des essais réalisés au dernier laboratoire, plusieurs groupes de paramètres ont été testés pour tendre vers un régulateur efficace. Pour ce faire, il a été choisi de partir du régulateur testé lors de l'essai 1 de la première séance. À partir de ces paramètres, nous avons abouti sur un régulateur optimisé. Les résultats de cette démarche seront présentés sous forme d'une \textit{feuille de résultat} comprenant :
 \begin{itemize}
@@ -18,11 +18,11 @@ Lorsque l'on désire paramétrer une action en feed-forward, il est nécessaire 
 On peut observer que la consigne de courant sature. De ce fait, on observe que le système tend vers la consigne mais en oscillant.  Il a été décidé de réaliser l'essai suivant en augmentant la valeur de la constante proportionnelle.
 \\\hline
 \end{optibox}
-\
-begin{optibox}{essai2}{10}{150}{15}
+
+\begin{optibox}{essai2}{10}{150}{15}
 La consigne de courant sature encore plus.
 Cependant, les essais 3 à 12 ne seront pas présentés car ils sont contre-productifs. Une mauvaise compréhension de certains paramètres nous ont conduits à augmenter la valeur de $K_{p}$ jusque 30. Voyant que nous nous écartions d'une régulation efficace, il a été convenue de repartir de l'essai 1 pour poursuivre l'optimisation mais en diminuant seulement la valeur de $T_{d}$\\
-\hline
+\\\hline
 \end{optibox}
 
 \begin{optibox}{essai13}{6}{150}{8}
@@ -31,7 +31,7 @@ La consigne de courant ne sature plus mais on observe un grand dépassement. Les
 \end{optibox}
 
 \begin{optibox}{essai14}{4}{80}{8}
-La consigne de température étant atteinte et le dépassement étant faible, la composante intégrative sera diminuée et le facteur de dérivation sera quant à lui augmenté pour essayer d'accélérer la régulation du système.
+La consigne de température étant atteinte et le dépassement étant faible, la composante intégrative et le facteur de dérivation seront augmentés pour essayer d'accélérer la régulation du système.
  \\\hline
 \end{optibox}
 
@@ -46,7 +46,7 @@ La sortie du système ne présente plus de dépassement mais la consigne est att
 
 \begin{optibox}{essai17}{4.5}{65}{12.5}
 Le dépassement est très faible et la température souhaitée est atteinte en moins de 200 secondes. 
-Les paramètres de cet essai seront utilisés pour comme constante du régulateur optimisé.
+Les paramètres de cet essai seront utilisés comme constantes du régulateur optimisé.
 \\\hline
 \end{optibox}
 
@@ -69,41 +69,43 @@ Les paramètres de cet essai seront utilisés pour comme constante du régulateu
 %\item \textbf{\textcolor{green}{$K_{p} = 4.5$, $T_{i} = 65$ et $T_{d} = 12.5$}}(17)
 %\end{itemize}
 
-\subsection{Fonction de transfert}
+
 \subsubsection{Fonction de transfert du système}
-\begin{center}\includegraphics[scale=0.8]{optimisation/H1.png}\end{center}
-\subsubsection{Fonction de transfert de la perturbation}
-\begin{center}\includegraphics[scale=0.8]{optimisation/H2.png}\end{center}
+
 
 \subsection{Manipulation - Feed-Forward}
 \label{FW}
-Vitesse du ventilateur vu comme une perturbation  qui va affecter la sortie du système. La sortie est donc une combinaison de l'influence du courant dans la résistance chauffante et de la vitesse du ventilateur (avec sa dynamique propre - cela implique une fonction de transfert)\\
+Le but du feed-forward est de compenser la perturbation due à la vitesse du ventilateur en jouant sur le courant dans la résistance (en appliquant l'inverse de la fonction de la perturbation. Dans ce cas, la perturbation deviendrait quasi invisible sur la sortie.\\
 
-Le but est de compenser la perturbation de la vitesse du ventilateur en jouant sur le courant dans la résistance (en appliquant l'inverse de la fonction de la perturbation. Dans ce cas, la perturbation serait invisible sur la sortie\\
+La sortie est vue comme une combinaison de l'influence du courant dans la résistance chauffante et de la vitesse du ventilateur. Cette partie du système à une dynamique qui lui est propre ce qui implique de connaitre sa fonction de transfert. La figure \ref{} présente la réponse indicielle de la perturbation lorsqu'elle est placée dans le système ainsi que les paramètres caractérisant la fonction de transfert basé sur du modèle de Vander Grinten.\\
 
-Pour pouvoir implémenter cette solution, on a besoin de mesurer la perturbation. La perturbation devient une entrée pour le régulateur aussi\\
+\fig{optimisation/H2.png}{0.6}{Recherche des paramètre de la fonction de transfert de la perturbation}
 
-\begin{figure}
+\subsubsection{Mise à jour du système}
+\begin{figure}[h]
+
 \input{Seance_2_SCH}
-\caption{Schéma bloc du système avec le régulateur de suivis de consigne et de réjection des perturbation}s
+\caption{Schéma bloc du système avec le régulateur de suivis de consigne et de réjection des perturbations}
 \end{figure}
 
+Au vue du schéma, la perturbation devient une entrée pour le régulateur. La sortie  $y_{pv}$ est influencée par  $H_{1}$ et par $H_{2}$ et devient :\\
 
 \begin{align}
 y_{pv} &= u \cdot H_{1}(s) + d \cdot H_{2}(s)\\
 	   &= d \cdot R_{2} \cdot H_{1} + d \cdot H_{2}\\
 	   &= d \cdot (R_{2} \cdot H_{1} + H_{2})\\
-	   &= 0
+\end{align}
+Avec $R_{2}$ le deuxième régulateur connecté à la mesure de la perturbation et $d$ la perturbation (\textit{disturbate})
+Comme l'impact sur la sortie doit être minimal, nous pouvons dire que $y_{pv}$ est considéré comme nulle. L'équation devient.
+
+\begin{align}
+y_{pv} &= 0\\
+	d \cdot (R_{2} \cdot H_{1} + H_{2}) &= 0\\
+	\rightarrow R_{2} &= \frac{-H_{2}}{H_{1}}\\
 \end{align}
 
-\begin{equation}
-H_{2} = R_{2} \cdot H_{1} \leftrightarrow R_{2} = \frac{-H_{2}}{H_{1}}
-\end{equation}
 
-Avec $R_{2}$ le deuxième régulateur connecté à la mesure de la perturbation et $d$ la perturbation (\textit{disturbate})
-
-Le modèle de $H_{1}$ étant le modèle de Vander Grinten, c'est aussi le modèle que l'on va utiliser pour $H_{2}$
-
+Le modèle de $H_{1}$  et $H_{2}$ étant le modèle de Vander Grinten Les fonction de transfert peuvent s'écrire :
 \begin{equation}
 H_{1} =  \frac{k_{1} \cdot e^{-sT_{m1}}}{(sT_{11} + 1) \cdot (sT_{12} + 1)}
 \end{equation}
@@ -112,20 +114,22 @@ H_{1} =  \frac{k_{1} \cdot e^{-sT_{m1}}}{(sT_{11} + 1) \cdot (sT_{12} + 1)}
 H_{2} =  \frac{k_{2} \cdot e^{-sT_{m2}}}{(sT_{21} + 1) \cdot (sT_{22} + 1)}
 \end{equation}
 
-
-Par le schéma du système, on trouve les relations liant les fonctions de transfert et les régulateurs. On peut donc poser les relations suivantes :
-
+On peut donc poser les relations suivantes :
 \begin{align}
 R_{2} &\rightarrow \frac{-k_{1}}{k_{2}} = gain\\
 	  &\rightarrow e^{-s(T_{m1} - T_{m2})}\\
 	  &\rightarrow \frac{(sT_{11} + 1) \cdot (sT_{12} + 1)}{(sT_{21} + 1) \cdot (sT_{22} + 1)}\\
 \end{align}
 
-Condition pour implémenter le Feed Forward
+\subsubsection{Condition pour implémenter le Feed Forward}
 \begin{itemize}
 \item Ordre de $H_{2}$ doit être égale à l'ordre de $H_{1}$
 \item Le temps mort du régulateur 2 doit être plus faible que le temps de la perturbation sur la sortie (on doit calculer et agir sur la sortie au minimum en même temps que la perturbation si on veut la rendre invisible)
 \item On doit pouvoir mesurer la perturbation
 \end{itemize}
 
-Le problème est que le régulateur 2 ne suit pas la consigne, il n'est la que pour rejeter la consigne. Cela implique que nous devons ajouter un régulateur pour suivre la consigne et rejeter les perturbations autres que celle mesurée. Le régulateur de suivis de consigne est celui dimensionner lors des séances précédentes. 
+\subsection{Résultats expérimentaux}
+\fig{FeedForword/Rising.png}{0.6}{Réponse du système à une variation du ventilateur de 50\% à 60\%}
+\fig{FeedForword/Falling.png}{0.6}{Réponse du système à une variation du ventilateur de 60\% à 50\%}
+
+\subsection{Observation}
