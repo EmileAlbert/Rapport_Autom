@@ -1,0 +1,25 @@
+\centering
+    
+\tikzstyle{block} = [draw, fill=blue!20, rectangle, minimum height=3em, minimum width=6em]
+\tikzstyle{sum} = [draw, fill=blue!20, circle, node distance=1cm]
+\tikzstyle{input} = [coordinate]
+\tikzstyle{output} = [coordinate]
+\tikzstyle{tmp} = [coordinate]
+\tikzstyle{pinstyle} = [pin edge={to-,thin,black}]
+
+\begin{tikzpicture}[auto, node distance=2cm,>=latex']
+% Blocks
+       
+\node [input, name=input] {};
+\node [block, right of=input, node distance=4cm] (system-1) {$H^{-1}(s)$};
+\node [block, right of=system-1, node distance=4cm] (system1) {$H(s)$};
+\node [output, right of=system1, node distance=4cm] (output) {};
+		
+% Basic horizontal Flow
+\draw [->] (input) -- node {$y_{sp}(s)$}(system-1); 
+\draw [->] (system-1) -- node {$U(s)$} (system1);
+\draw [->] (system1) -- node {$y_{pv}$}(output);
+     
+
+
+\end{tikzpicture}

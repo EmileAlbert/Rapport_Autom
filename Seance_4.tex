@@ -1,2 +1,54 @@
 \section{Séance 4 : Internal Model Control}
 \subsection{Introduction}
+L'objectif de ce laboratoire est de découvrir une structure de réglage appelée structure de réglage par modèle interne ou "IMC" pour \textbf{I}nternal \textbf{M}odel \textbf{C}ontroller.\\
+
+Le principe de cette structure de réglage est de considérer une transmisttance inverse à celle système en amont de celui-ci. De cette façon, la transmittance totale du système est égale 1. Ainsi, un échelon en entrée se retrouvera de manière identique en sortie.\\
+
+\subsection{Internal Model Controller}
+\subsubsection{Schéma simplifié}
+\begin{figure}[H]
+\input{Seance_4_SCH1}
+\caption{Schéma simple de la structure de réglage \textbf{IMC}}
+\end{figure}
+
+Nous retrouvons sur le schéma selon le modèle de \textit{Vander Grinten}
+\begin{itemize}
+\item La fonction de transfert modélisant le système 
+\begin{equation}
+H(s) = \frac{k \cdot e^{-sT_{m}}}{(sT_{1} + 1)(sT_{2} + 1)} 
+\end{equation}
+
+\item La fonction de transfert inverse
+\begin{equation}
+H^{-1}(s) = (sT_{1} + 1) \cdot (sT_{2} + 1) \cdot \frac{1}{k}
+\end{equation} 
+\end{itemize}
+
+Cette structure implique plusieurs choses :
+\begin{itemize}
+\item Inversion du temps mort\\
+Sauf qu'on ne peut pas inverser le temps mort (système non causal)
+
+\item Utilisation d'un modèle\\
+Nous utilisons un modèle pour représenter le système. Cela suppose qu'il ne correspond pas exactement au comportement réel du système. Si le système est piloté avec les paramètres du modèle, il en résultera des erreurs. Ces erreurs s'additionneront avec les autres perturbations appliquées au système. 
+ 
+\item Degré de la fonction de transfert\\
+De plus, on a un degré plus élevé au numérateur (impulsion de Dirac infinie en sortie) donc on va devoir mettre un dénominateur supérieur - filtrage
+\end{itemize}
+
+\subsubsection{Schéma usuel}
+\begin{figure}[H]
+\input{Seance_4_SCH2}
+\caption{Schéma de la structure de réglage \textbf{IMC}}
+\end{figure}
+
+Dans ce schéma, pour régler le problème du degré du numérateur plus élevé dans la fonction de transfert inverse, on ajoute un terme $T_{f}$. On notera que l'expression du temps mort à aussi été supprimé en rapport au problème présenté dans la section précédente.\\
+
+La fonction de transfert inverse devient alors 
+\begin{equation}
+H_{mf}^{-1}(s) = \frac{(sT_{1} + 1) \cdot (sT_{2} + 1)}{(sT_{f} + 1)^{2}} \cdot \frac{1}{k}
+\end{equation}
+
+\subsection{IMC avec Simulink}
+
+\subsection{Initialisation du contrôleur}

@@ -1,0 +1,58 @@
+\centering
+    
+\tikzstyle{block} = [draw, fill=blue!20, rectangle, minimum height=3em, minimum width=6em]
+\tikzstyle{sum} = [draw, fill=blue!20, circle, node distance=1cm]
+\tikzstyle{input} = [coordinate]
+\tikzstyle{output} = [coordinate]
+\tikzstyle{tmp} = [coordinate]
+\tikzstyle{pinstyle} = [pin edge={to-,thin,black}]
+
+\begin{tikzpicture}[auto, node distance=2cm,>=latex']
+% Blocks
+       
+\node [input, name=input] {};
+\node [sum, right of=input] (sum) {};
+\node [block, right of=sum, node distance=3cm] (system-1) {$H^{-1}(s)$};
+\node [sum, right of=system-1, node distance=3cm] (point) {};
+\node [sum, right of=point, node distance=0.5cm] (sum2) {};
+\node [block, right of=sum2, node distance=3cm] (system1) {$H(s)$};
+\node [sum, right of=system1, node distance=3cm] (sum4) {}; 
+\node [sum, right of=sum4, node distance=0.5cm] (point1) {};
+\node [output, right of=sum4, node distance=1.5cm] (output) {};
+
+\node [tmp, below of=point, node distance=3cm] (link_tmp){};       
+\node [block, below of=system1, node distance=3cm] (systemm) {$H_{m}(s)$};    
+\node [sum, below of=sum4, node distance=3cm] (sum5) {}; 
+		
+\node [tmp, below of=sum5, node distance=1cm] (link_tmp1){};
+\node [tmp, below of=sum, node distance=4cm] (link_tmp2){};
+		
+\node [tmp, above of=sum2, node distance=2cm] (d'){};
+\node [tmp, above of=sum4, node distance=2cm] (d){};
+		
+% Basic horizontal Flow
+\draw [->] (input) -- node {$y_{sp}$}(sum);
+\draw [->] (sum) -- (system-1);   
+\draw      (system-1) -- node {$u$} (point);
+\draw [->] (point) -- (sum2);
+\draw [->] (sum2) -- (system1);
+\draw      (system1) -- (sum4);
+\draw [->] (sum4) -- (point1);
+\draw [->] (point1) -- node {$y_{pv}$}(output);
+     
+\draw [->] (link_tmp) -- (systemm);
+\draw [->] (systemm) -- (sum5);    
+        
+\draw      (link_tmp1) -- (link_tmp2);
+        
+% Basic vertical Flow
+\draw [->] (d') -- node {$d'$}(sum2);
+\draw [->] (d) -- node {$d$}(sum4);
+		
+\draw      (point) -- (link_tmp);
+\draw [->] (sum4) -- (sum5);
+        
+\draw      (sum5) -- node {$\widehat{d}$}(link_tmp1);
+\draw [->] (link_tmp2) -- (sum);
+  
+\end{tikzpicture}
