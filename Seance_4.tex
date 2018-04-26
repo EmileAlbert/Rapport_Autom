@@ -20,7 +20,7 @@ H(s) = \frac{k \cdot e^{-sT_{m}}}{(sT_{1} + 1)(sT_{2} + 1)}
 
 \item La fonction de transfert inverse
 \begin{equation}
-H^{-1}(s) = (sT_{1} + 1) \cdot (sT_{2} + 1) \cdot \frac{1}{k}
+H^{-1}(s) = (sT_{1} + 1) \cdot (sT_{2} + 1) \cdot \frac{1}{k}\cdot e^{sT_{m}}
 \end{equation} 
 \end{itemize}
 
@@ -33,7 +33,7 @@ Sauf qu'on ne peut pas inverser le temps mort (système non causal)
 Nous utilisons un modèle pour représenter le système. Cela suppose qu'il ne correspond pas exactement au comportement réel du système. Si le système est piloté avec les paramètres du modèle, il en résultera des erreurs. Ces erreurs s'additionneront avec les autres perturbations appliquées au système. 
  
 \item Degré de la fonction de transfert\\
-De plus, on a un degré plus élevé au numérateur (impulsion de Dirac infinie en sortie) donc on va devoir mettre un dénominateur supérieur - filtrage
+De plus, on a un degré plus élevé au numérateur (ce qui ipliquerait des impulsion de Dirac infinie en sortie) nous allons donc devoir mettre un dénominateur supérieur en filtrage pour équilibrer la fonction.
 \end{itemize}
 
 \subsubsection{Schéma usuel}
@@ -42,7 +42,7 @@ De plus, on a un degré plus élevé au numérateur (impulsion de Dirac infinie 
 \caption{Schéma de la structure de réglage \textbf{IMC}}
 \end{figure}
 
-Dans ce schéma, pour régler le problème du degré du numérateur plus élevé dans la fonction de transfert inverse, on ajoute un terme $T_{f}$. On notera que l'expression du temps mort à aussi été supprimé en rapport au problème présenté dans la section précédente.\\
+Dans cette configuration, pour régler le problème du degré du numérateur plus élevé dans la fonction de transfert inverse, on ajoute un terme $T_{f}$. On notera que l'expression du temps mort à aussi été supprimé en rapport au problème présenté dans la section précédente.\\
 
 La fonction de transfert inverse devient alors 
 \begin{equation}
