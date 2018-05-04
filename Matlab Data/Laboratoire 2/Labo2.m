@@ -2,7 +2,9 @@ Kp = 4.118 * 1.5;
 Ti = 145.83;
 Td = 15.622;
 v = 15;
+
 close all
+
 bodeOfG0(0.66 * Kp,Ti,Td,v, 'bode-0');
 bodeOfG0(Kp,Ti,Td,v, 'bode-1');
 %bodeOfG0(0.5*Kp,Ti,Td,v, 'bode-2');

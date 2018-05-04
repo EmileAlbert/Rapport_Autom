@@ -58,8 +58,8 @@ pouvoir tirer des conclusions plus pertinentes de nos essais.
 \subsubsection{Régulateur P}
 Le régulateur P (proportionnel) est le cas le plus simple.
 La commande de sortie est uniquement définie par la différence 
-$\epsilon(t)$ entre la valeur désirée, le \textbf{setpoint} et
-la valeur réelle, mesurée, amplifiée par un certain gain $k_p$.
+$\epsilon(t)$ entre la valeur désirée, qu'on appelle le \textbf{setpoint}, et
+la valeur réelle mesurée, amplifiée par un certain gain $k_p$.
 
 $$u(t) = k_p \cdot \epsilon(t)$$
 
@@ -82,7 +82,7 @@ Si on change le setpoint il faut un offset différent.
 
 \subsubsection{Régulateur PI}
 Le régulateur PI (proportionnel - intégrale), est déjà nettement plus pratique
-puisqu'il permet d'obtenir l'offset variable. Le terme intégrale va augmenter 
+puisqu'il permet d'obtenir cet l'offset variable sans trop d'efforts. Le terme intégrale va augmenter 
 tant que l'erreur est positive. Une fois que l'erreur est nulle, 
 le terme intégrale reste constant. 
 
@@ -98,7 +98,7 @@ reste constant.
 
 Cependant, il faut faire attention à ne pas trop abuser du terme intégrale.
 Si son coefficient est trop grand, on va créer des problèmes de dépassement
-(\textit{'overshoot'}) et d'oscillations.
+(\textit{'overshoot'}) et d'oscillations, voir même rendre le système instable.
 
 \subsubsection{Régulateur PID}
 Finalement, dans le régulateur PID (proportionnel - intégrale - dérivée), on 
@@ -125,25 +125,32 @@ A la suite de la première séance, nous avons trouvés les valeurs de gains sui
     $T_{f0} = 1.041$
 \end{center}
 
-\paragraph{\textcolor{red}{Attention:}}\mbox{}\\
-Le \textcolor{red}{gain proportionnel} $K_0$ que nous avons trouvé à l'aide de la méthode de 
-Chien - Hrones - Reswick était relativement faible, du à l'imprécision 
-sur la détermination graphique de $T_{U}$ et $T_{G}$. Durant le premier essai,
-décrit dans la section \ref{essai-0}, nous avons constaté que le système mettait
-énormément de temps à se stabiliser. Nous avons mit plus de \textcolor{red}{35 min}
-a terminer cet essai. Nous avons donc décider d'augmenter ce coefficient pour le
-reste des manipulations, afin de pouvoir terminer les 9 essais dans les temps.\\
+\paragraph{\textcolor{red}{Note:}}\mbox{}\\
+A la suite de la première mesure, qui a durée très longtemps par rapport aux autres groupes,
+nous avions l'impression que notre gain proportionnel $K_0$ que nous avions trouvé à l'aide de la méthode de 
+Chien - Hrones - Reswick était relativement faible, du à l'imprécision sur la détermination graphique 
+de $T_{U}$ et $T_{G}$. Durant le premier essai, décrit dans la section \ref{essai-0}, nous avons constaté que 
+le système mettait énormément de temps à se stabiliser, soit approximativement 9 minutes. Suivi d'encore 10 minutes
+pour chaque perturbation. Nous avons donc pensé qu'en augmentant le coefficient proportionnel pour le
+reste des manipulations, nous pourrions diminuer le temps nécessaire à chaque mesurer et ainsi terminer les 9 essais dans les temps.
+Ceci à été fait en conecertation avec l'enseignant, bien entendu.\\
 
-Soit si on indique le gain trouvé initialement par $K_0'$, nous avons décider de 
-prendre comme gain $$K_0 = 1.5 \cdot K_0' = 6.177$$
+Soit si on indique le gain trouvé initialement par $K_0'$, nous avons décidé de 
+prendre comme gain durant le reste des mesures 
+
+$$K_0 = 1.5 \cdot K_0' = 6.177$$
+
+Il s'est avéré plus tard, dans la section sur l'optimisation du régulateur \ref{opt-reg}, que ce n'était pas
+le coefficient proportionnel qui était trop faible, mais le terme intégratif qui avait trop peu d'influence.
 
 
+\pagebreak
 \subsubsection{Essai 0 : $K_{p} = 0.66*K_{0}'$, $T_{i} = T_{i0}$ et $T_{d} = T_{d0}$} \label{essai-0}
 % Correspond aux mesures matlab s2e0
-Comme mentionné dans le paragraph précédent, le premier essai s'est fait avec
+Comme mentionné dans le paragraphe précédent, le premier essai s'est fait avec
 la valeur initiale $K_0'$ trouvée par la méthode de Chien - Hrones - Reswick.
 Cependant comme nous avons corrigé le gain de base $K_0$ après cette essai, nous
-utiliseront cette essai, avec $K = 0.66 \cdot K_0$, comme l'essai qu'il fallait
+retiendrons cette essai, avec $K = 0.66 \cdot K_0$, comme l'essai qu'il fallait
 faire avec un gain $K = 0.5 \cdot K_0$.
 
 \begin{figure}[H]
@@ -181,7 +188,7 @@ faire avec un gain $K = 0.5 \cdot K_0$.
 \end{figure}
 
 Dans cet essais, suite à l'échelon, on peut voir que le système prend un peu 
-moins de 7 min à se stabiliser. Dans la première minute, on peut clairement
+plus de 8 min à se stabiliser. Dans la première minute, on peut clairement
 observer l'action du terme proportionnel. Comme l'erreur est grande, 
 il va générer une action importante, ce qui est représenté par le pic
 dans le graphe de la commande.\\
@@ -190,7 +197,14 @@ Ensuite, comme l'erreur diminue rapidement, le terme proportionnel diminue égal
 Et la on peut voir l'effet du terme intégratif qui va progressivement venir
 diminuer l'erreur statique jusqu'à être stable au setpoint.
 
-\fig{essais/bode-0}{0.85}{Diagramme de Bode}
+\paragraph{\textcolor{red}{Note:}}\mbox{}\\
+Les diagrammes de Bodes que nous avons générés sont étranges avec des valeurs de gain et 
+phases énormes. Nous en avons discuté brièvement avec M. Arnould, mais n'avons pas reussi à
+déterminer l'origine de ces grandes valeurs. Nous mettrons donc les diagrammes de bodes que
+nous avons calculés dans le rapport, mais notterons qu'aucune interprétation n'en a été faite,
+de peur de tirer de mauvaises conclusions. 
+
+\fig{essais/bode-0}{0.5}{Diagramme de Bode}
 
 \subsubsection{Essai 1 : $K_{p} = K_{0}'$, $T_{i} = T_{i0}$ et $T_{d} = T_{d0}$}
 %Correspond au fichier s2e1 
@@ -232,7 +246,7 @@ diminuer l'erreur statique jusqu'à être stable au setpoint.
 Dans cet essai, on peut voir que l'augmentation du terme proportionnel introduit
 une légère oscillation avant que le système se stabilise.
 
-\fig{essais/bode-1}{0.85}{Diagramme de Bode}
+\fig{essais/bode-1}{0.5}{Diagramme de Bode}
 
 \subsubsection{Essai 2 : $K_{p} = 0.5*K_{0}'$, $T_{i} = T_{i0}$ et $T_{d} = T_{d0}$}
 L'essai 2 n'as pas été fait, comme nous avons pris le premier essai \ref{essai-0}
@@ -240,48 +254,46 @@ qui le remplace.
 
 \subsubsection{Essai 3 : $K_{p} = K_{0}'$, $T_{i} = 10^{5}$ et $T_{d} = T_{d0}$}
 %Correspond au fichier s2e3
-\begin{figure}[H]
-    \centering
-    % Line 1
-    \makebox[\textwidth][c]{
-        \begin{subfigure}[b]{0.37\textwidth}
-            \includegraphics[width=\textwidth]{essais/s2e3-step-out}
-        \end{subfigure}
-        ~
-        \begin{subfigure}[b]{0.37\textwidth}
-            \includegraphics[width=\textwidth]{essais/s2e3-pert-up-out}
-        \end{subfigure}
-        ~
-        \begin{subfigure}[b]{0.37\textwidth}
-            \includegraphics[width=\textwidth]{essais/s2e3-pert-down-out}
-        \end{subfigure}
-    }
-    % Line 2
-    \makebox[\textwidth][c]{
-        \begin{subfigure}[b]{0.37\textwidth}
-            \includegraphics[width=\textwidth]{essais/s2e3-step-command}
-        \end{subfigure}
-        ~
-        \begin{subfigure}[b]{0.37\textwidth}
-            \includegraphics[width=\textwidth]{essais/s2e3-pert-up-command}
-        \end{subfigure}
-        ~
-        \begin{subfigure}[b]{0.37\textwidth}
-            \includegraphics[width=\textwidth]{essais/s2e3-pert-down-command}
-        \end{subfigure}
-    }
-    \caption{Graphes essai 3}
-    \label{fig:essai-3}
-\end{figure}
+% \begin{figure}[H]
+%     \centering
+%     % Line 1
+%     \makebox[\textwidth][c]{
+%         \begin{subfigure}[b]{0.37\textwidth}
+%             \includegraphics[width=\textwidth]{essais/s2e3-step-out}
+%         \end{subfigure}
+%         ~
+%         \begin{subfigure}[b]{0.37\textwidth}
+%             \includegraphics[width=\textwidth]{essais/s2e3-pert-up-out}
+%         \end{subfigure}
+%         ~
+%         \begin{subfigure}[b]{0.37\textwidth}
+%             \includegraphics[width=\textwidth]{essais/s2e3-pert-down-out}
+%         \end{subfigure}
+%     }
+%     % Line 2
+%     \makebox[\textwidth][c]{
+%         \begin{subfigure}[b]{0.37\textwidth}
+%             \includegraphics[width=\textwidth]{essais/s2e3-step-command}
+%         \end{subfigure}
+%         ~
+%         \begin{subfigure}[b]{0.37\textwidth}
+%             \includegraphics[width=\textwidth]{essais/s2e3-pert-up-command}
+%         \end{subfigure}
+%         ~
+%         \begin{subfigure}[b]{0.37\textwidth}
+%             \includegraphics[width=\textwidth]{essais/s2e3-pert-down-command}
+%         \end{subfigure}
+%     }
+%     \caption{Graphes essai 3}
+%     \label{fig:essai-3}
+% \end{figure}
 
 Dans cet essai, la contribution du terme intégratif est réduit à zéro.\\
-
-\textcolor{red}{
 Malheureusement, nous avons fait une fausse manipulation et les données de
 cet essais n'ont pas été correctement enregistrées...
-}
 
-\fig{essais/bode-3}{0.85}{Diagramme de Bode}
+
+%\fig{essais/bode-3}{0.5}{Diagramme de Bode}
 
 \subsubsection{Essai 4 : $K_{p} = K_{0}'$, $T_{i} = 10^{5}$ et $T_{d} = 10^{-3}$}
 %Correspond au fichier s2e4
@@ -326,7 +338,10 @@ l'échelon, malgré l'oscillation importante, le système a réussi à se stabil
 sur la valeur du setpoint. Mais quand on regarde le graphe de la première perturbation,
 bien que les oscillations diminue, une erreur statique persiste.
 
-\fig{essais/bode-4}{0.85}{Diagramme de Bode}
+Au niveau de la commande, on peut voir une légère saturation juste après avoir appliqué l'échelon.
+Ceci est est à éviter, puisqu'on sort du régime linéaire et notre modélisation n'est alors plus correcte.
+
+\fig{essais/bode-4}{0.5}{Diagramme de Bode}
 
 \subsubsection{Essai 5 : $K_{p} = 0.5*K_{0}'$, $T_{i} = 10^{5}$ et $T_{d} = 10^{-3}$}
 %Correspond au fichier s2e5
@@ -365,14 +380,17 @@ bien que les oscillations diminue, une erreur statique persiste.
     \label{fig:essai-5}
 \end{figure}
 
-La diminution du terme proportionnel, toujours avec les termes intégratif et dérivatif
+Avec la diminution du terme proportionnel, toujours avec les termes intégratif et dérivatif
 ayant aucune contribution, on réduit considérablement les oscillations. Mais
-comme on peut le voir, l'erreur statique est grande. A la première perturbations,
+comme on peut le voir, l'erreur statique est grande. A la première perturbation,
 le système se stabilise à la valeur désirée. Mais comme pour l'essai précédent,
 ceci est plus un coup de chance qu'autre chose. Quand la perturbation est à nouveau
 supprimée, on peut voir que l'erreur statique est à nouveau présente.
 
-\fig{essais/bode-5}{0.85}{Diagramme de Bode}
+De plus, comparé à l'essai précédent, nous pouvons voir que la commande ne part plus en saturation.
+Nous avons même de la marge, puisque nous sommes à 80\%, et pourrions donc le réaugmenter un peu plus.
+
+\fig{essais/bode-5}{0.5}{Diagramme de Bode}
 
 \subsubsection{Essai 6 : $K_{p} = K_{0}'$, $T_{i} = T_{i0}$ et $T_{d} = 2*T_{d0}$}
 %Correspond au fichier s2e6
@@ -416,7 +434,11 @@ En augmentant l'apport du terme dérivatif, on peut remarquer que la commande
 est considérablement plus bruitée. Par contre, on peut apercevoir un effet 
 bénéfique dans la réaction au perturbations, où la courbe est plus aplatie.
 
-\fig{essais/bode-6}{0.85}{Diagramme de Bode}
+Par contre, nous pouvons voir que l'effet proprotionnel qui donne le coup de punch au début est
+également diminué du au terme dérivatif ce qui fait que nous approchones le setpoint de façon plus
+lente et progressive.
+
+\fig{essais/bode-6}{0.5}{Diagramme de Bode}
 
 \subsubsection{Essai 7 : $K_{p} = K_{0}$, $T_{i} = T_{i0}$ et $T_{d} = 4*T_{d0}$}
 %Correspond au fichier s2e7
@@ -459,7 +481,7 @@ En augmentant trop le coefficient du terme dérivatif, le système frôle l'inst
 Les oscillations ont tendances à parfois diminuer, parfois augmenter. Dans le dernier
 cas, le système s'emballe et est instable.
 
-\fig{essais/bode-7}{0.85}{Diagramme de Bode}
+\fig{essais/bode-7}{0.5}{Diagramme de Bode}
 
 \subsubsection{Essai 8 : $K_{p} = 8*K_{0}'$, $T_{i} = 10^{5}$ et $T_{d} = 10^{-3}$}
 %Correspond au fichier s2e8
@@ -488,14 +510,11 @@ Comme les oscillations étaient grandes et n'allaient pas se résorber, nous
 n'avons pas trouvé utiles d'appliquer les perturbations, car aucune conclusion
 utile aurait pu en être déduite.
 
-\fig{essais/bode-8}{0.85}{Diagramme de Bode}
+\fig{essais/bode-8}{0.5}{Diagramme de Bode}
 
-\subsection{Comparaison des essais}
-\textcolor{red}{Diagramme de Bode - Diagramme temporelle\\}
-
-\textcolor{red}{Stabilité, temps de réponse, dépassement, forme de l’action (énergique, bruitée), action maximale demandée, marges de gain et de phase en fonction de K, Ti et Td.}
 
 \subsection{Régulateur optimisé}
-Sur base des observations précédentes, nous avons pu intuitivement modifier les valeurs des trois paramètres du régulateur PID pour tenter de l'optimiser.\\
+La mesure de ces différents éssais nous a pris énormément de temps et nous n'avons donc pas
+pu réaliser des essais afin d'obtenir un régulateur optimisé pendant la séance 2. Il sera 
+fait pendant la séance 3 et donc traité dans la section \ref{opt-reg}.
 
-\textcolor{red}{Présentation de ses résultats}
