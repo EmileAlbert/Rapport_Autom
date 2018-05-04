@@ -72,7 +72,9 @@ Enfin, la troisième zone va de la 760ième seconde jusqu'à la fin. Cette zone 
 \begin{figure}[H]
 \includegraphics[width= 0.8\textwidth]{../Pictures/IMC/rej_perturb.png}
 \end{figure}
-Ceci est du au fait que \#\#.
+Selon nous, ceci est dû au fait que en injectant une perturbation (c'est à dire en changeant la valeur de la résistance), nous recréons un système différent et au lequel notre fonction de transfert inverse n'est plus liée. Notre régulateur devient donc inadapté au système ce qui diminue très fortement ses performances. 
+
+La situation dans laquelle nous nous trouvons est similaire à celle que nous aurions si nous n'avions rien changé au système, mais que nous avions modifier la fonction de transfert inverse "$H^{-1}(s)$". Le suivit de consigne dans ce cas-ci aurait également été beaucoup moins efficace.
 \subsection{Atténuation du pic à l'initialisation du système}
 
 Comme présenté précédement, nous constatons une importante chute de la valeur en sortie du sytème lors de l'activation du régulateur. Ceci étant dû au fait que le modèle récommence à zéro à son activation, nous pouvons aisément atténuer la chute en fixant dans le modèle une valeur proche de la valeur réelle de sortie du système lorsque que le régulateur est inactif. Cette valeur fixe nous permet de réduire l'écart entre la valeur réelle et la valeur modélisée au démarrage et donc de limiter la chute de la valeur de sortie du système. 
