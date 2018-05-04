@@ -127,9 +127,16 @@ R_{2} &\rightarrow \frac{-k_{1}}{k_{2}} = gain\\
 \item Le temps mort du régulateur 2 doit être plus faible que le temps de la perturbation sur la sortie (on doit calculer et agir sur la sortie au minimum en même temps que la perturbation si on veut la rendre invisible)
 \item On doit pouvoir mesurer la perturbation
 \end{itemize}
-
+\newpage
 \subsection{Résultats expérimentaux}
 \fig{FeedForword/Rising.png}{0.6}{Réponse du système à une variation du ventilateur de 50\% à 60\%}
 \fig{FeedForword/Falling.png}{0.6}{Réponse du système à une variation du ventilateur de 60\% à 50\%}
-
+\fig{FeedForword/RisingU.png}{0.6}{Consigne en sortie du régulateur en réponse à une variation du ventilateur de 50\% à 60\%}
+\fig{FeedForword/FallingU.png}{0.6}{Consigne en sortie du régulateur en réponse à  variation du ventilateur de 50\% à 60\%}
 \subsection{Observation}
+\subsubsection{Comparaison de la sortie du système}
+On remarque sur les figures \ref{FeedForword/Rising.png} et  \ref{FeedForword/Falling.png} que les manières de contre-carrer la perturbation sont inversées. En effet la méthode avec feed-forward anticipe la perturbation. Pour exemple, lorsque la vitesse du ventilateur diminue on s'attend à voir la température augmentée (tracé orange de la figure  \ref{FeedForword/Falling.png} ) cependant le feed-forward va compensé en diminue la température. 
+On notera aussi que la variation de température est plus faibles lorsque l'on utilise le feed-forward, Tout comme le temps de stabilisation autour du point de consigne.
+
+\subsubsection{Comparaison de la sortie du régulateur}
+les figures \ref{FeedForword/RisingU.png} et \ref{FeedForword/FallingU.png} nous montrent le comportement du système en sortie du régulateur. L'observation principale que l'on peut faire est que sans feed-forward le système ne commencera à réagir que lorsque la perturbation aura un effet sur la sortie. A l'inverse on remarque qu'après seulement 4 secondes, le régulateur à déjà réagis à la perturbation alors que celle ci n'a pas encore d'impact sur la sortie.
