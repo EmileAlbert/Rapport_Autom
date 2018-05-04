@@ -59,19 +59,28 @@ Lors de l'essai représenté à la figure ci-dessous, nous observons très clair
 \begin{figure}[H]
 \includegraphics[width= \textwidth]{../Pictures/IMC/IMC_glob.png}
 \end{figure}
-Le première commence en zéro jusqu'à 580 sec et représente l'initialisation du système. Ceci correspond la réaction du système à partir du moment où l'on applique le régulateur et nous observons que la valeur s'éloigne très fortement de la valeur de consigne avant de remonter pour venir se plaquer contre cette dernière. Cette chute rapide est due à \#\# je sais plus .
+Le première commence en zéro jusqu'à 580 sec et représente l'initialisation du système. Ceci correspond la réaction du système à partir du moment où l'on applique le régulateur et nous observons que la valeur s'éloigne très fortement de la valeur de consigne avant de remonter pour venir se plaquer contre cette dernière. Cette chute rapide est due au fait que notre modèle recommence à une valeur de sortie de 0 pour monter vers la valeur de consigne demandée. En réalité, la sortie ne se trouve bien entendu pas à 0! Ceci crée un écart important entre la valeur réelle et supposée et provoque la violente chute que nous observons.
+
 \begin{figure}[H]
 \includegraphics[width= 0.8\textwidth]{../Pictures/IMC/amorce_sys.png}
 \end{figure}
-La deuxième partie se déroule de 550 sec à 780 sec. Nous appliquons durant cette période un échelon de 10\% afin de vérifier la performance du régulateur en suivit de consigne. Remarquons que les performances du systèmes à ce sujet son excellente ! Nous remarquons en effet que le système retrouve un situations d'équilibre vers la 720ième seconde soit 140 secondes après le début de l'impulsion là où notre régulateur PID en mettait \#\#.
+La deuxième partie se déroule de 550 sec à 780 sec. Nous appliquons durant cette période un échelon de 10\% afin de vérifier la performance du régulateur en suivit de consigne. Remarquons que les performances du systèmes à ce sujet son excellente ! Nous remarquons en effet que le système retrouve un situations d'équilibre vers la 720ième seconde soit 140 secondes après le début de l'impulsion là où notre régulateur PID optimisé en mettait pratiquement 200 (Optimisation du régulateur - voir essai n 17 ). 
 \begin{figure}[H]
 \includegraphics[width= 0.8\textwidth]{../Pictures/IMC/suivit_consigne.png}
 \end{figure}
-Enfin, la troisième zone va de la 760ième seconde jusqu'à la fin. Cette zone correspond à l'insertion  d'une perturbation dans le système. Dans notre cas, l'action sur l'intérupteur de la résistance chauffante a provoqué une soudaine montée en température que notre régulateur a eu beaucoup de mal à neutraliser. La valeur de la résistance ayant en effet augmenté de 4\% avant d'être atténuée contre \#\# \% pour le régulateur PID, nous pouvons conclure que la réjection de perturbations est la grosse faiblesse de ce genre de régulateur. 
+Enfin, la troisième zone va de la 760ième seconde jusqu'à la fin. Cette zone correspond à l'insertion  d'une perturbation dans le système. Dans notre cas, l'action sur l'intérupteur de la résistance chauffante a provoqué une soudaine montée en température que notre régulateur a eu beaucoup de mal à neutraliser. La valeur de la résistance ayant en effet augmenté de 4\% avant d'être atténuée contre 0,4\% pour le régulateur PID optimisé (voir figure 23- Réponse du système à une variation du ventilateur de 50\% À 60\%), nous pouvons conclure que la réjection de perturbations est la grosse faiblesse de ce genre de régulateur. 
 \begin{figure}[H]
 \includegraphics[width= 0.8\textwidth]{../Pictures/IMC/rej_perturb.png}
 \end{figure}
 Ceci est du au fait que \#\#.
-\subsection{Amélioration de la réjection de perturbation}
+\subsection{Atténuation du pic à l'initialisation du système}
 
-\#\# La manip a merdé et je me souvient plus vrmt de pk ni de ce qu'on était sensé obtenir. à compléter !!s
+Comme présenté précédement, nous constatons une importante chute de la valeur en sortie du sytème lors de l'activation du régulateur. Ceci étant du au fait que le modèle récommence à zéro à son activation, nous pouvons aisément atténuer la chute en fixant dans le modèle une valeur proche de la valeur réelle de sortie du système lorsque que le régulateur est inatif. Cette valeur fixe nous permet de réduire l'écart entre la valeur réelle et la valeur modélisée et donc de limiter la chute de la valeur de sortie du système. 
+
+Bien que rélativement aisée à mettre en place, nous n'avons malheureusement pas eu le temps de mettre cette technique en place lors du laboratoire du à la lenteur de notre système, ni de revenir ultérieurement en laboratoire pour refaire tout la manipulation. Nous supposons cependant à la vue des résultats des autres groupes que nous aurions atteint des résulats similaires permettant de n'avoir une chute que de quelques pourcents au lieux des 23 \% que nous obtenions précédement. 
+
+
+
+
+
+
