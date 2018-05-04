@@ -2,7 +2,7 @@
 \subsection{Introduction}
 L'objectif de ce laboratoire est de découvrir une structure de réglage appelée structure de réglage par modèle interne ou "IMC" pour \textbf{I}nternal \textbf{M}odel \textbf{C}ontroller.\\
 
-Le principe de cette structure de réglage est de considérer une transmisttance inverse à celle système en amont de celui-ci. De cette façon, la transmittance totale du système est égale 1. Ainsi, un échelon en entrée se retrouvera de manière identique en sortie.\\
+Le principe de cette structure de réglage est de considérer une transmisttance inverse à celle du système en amont de celui-ci. De cette façon, la transmittance totale du système est égale 1. Ainsi, un échelon en entrée se retrouvera de manière identique en sortie.\\
 
 \subsection{Internal Model Controller}
 \subsubsection{Schéma simplifié}
@@ -27,13 +27,13 @@ H^{-1}(s) = (sT_{1} + 1) \cdot (sT_{2} + 1) \cdot \frac{1}{k}\cdot e^{sT_{m}}
 Cette structure implique plusieurs choses :
 \begin{itemize}
 \item Inversion du temps mort\\
-Sauf qu'on ne peut pas inverser le temps mort (système non causal)
+Sauf qu'on ne peut pas inverser le temps mort (le système devrait non-causal)
 
 \item Utilisation d'un modèle\\
-Nous utilisons un modèle pour représenter le système. Cela suppose qu'il ne correspond pas exactement au comportement réel du système. Si le système est piloté avec les paramètres du modèle, il en résultera des erreurs. Ces erreurs s'additionneront avec les autres perturbations appliquées au système. 
+Nous utilisons un modèle pour représenter le système. Cela suppose qu'il ne correspond pas exactement au comportement réel du système. Si le système est piloté avec les paramètres du modèle, il en résultera des erreurs dues aux différences entre le modèle et le système réel. Ces erreurs s'additionneront avec les autres perturbations appliquées au système. 
  
 \item Degré de la fonction de transfert\\
-De plus, on a un degré plus élevé au numérateur (ce qui ipliquerait des impulsion de Dirac infinie en sortie) nous allons donc devoir mettre un dénominateur supérieur en filtrage pour équilibrer la fonction.
+De plus, on a un degré plus élevé au numérateur (ce qui impliquerait des impulsions de Dirac infinies en sortie) nous allons donc devoir mettre un dénominateur supérieur en filtrage pour équilibrer la fonction.
 \end{itemize}
 
 \subsubsection{Schéma usuel}
@@ -42,7 +42,7 @@ De plus, on a un degré plus élevé au numérateur (ce qui ipliquerait des impu
 \caption{Schéma de la structure de réglage \textbf{IMC}}
 \end{figure}
 
-Dans cette configuration, pour régler le problème du degré du numérateur plus élevé dans la fonction de transfert inverse, on ajoute un terme $T_{f}$. On notera que l'expression du temps mort à aussi été supprimé en rapport au problème présenté dans la section précédente.\\
+Dans cette configuration, pour régler le problème du degré du numérateur plus élevé dans la fonction de transfert inverse, on ajoute un terme $T_{f}$. On notera que l'expression du temps mort a aussi été supprimée par rapport au problème présenté dans la section précédente.\\
 
 La fonction de transfert inverse devient alors 
 \begin{equation}
@@ -59,19 +59,30 @@ Lors de l'essai représenté à la figure ci-dessous, nous observons très clair
 \begin{figure}[H]
 \includegraphics[width= \textwidth]{../Pictures/IMC/IMC_glob.png}
 \end{figure}
-Le première commence en zéro jusqu'à 580 sec et représente l'initialisation du système. Ceci correspond la réaction du système à partir du moment où l'on applique le régulateur et nous observons que la valeur s'éloigne très fortement de la valeur de consigne avant de remonter pour venir se plaquer contre cette dernière. Cette chute rapide est due à \#\# je sais plus .
+Le première commence en zéro jusqu'à 580 sec et représente l'initialisation du système. Ceci correspond à la réaction du système à partir du moment où l'on applique le régulateur et nous observons que la valeur s'éloigne très fortement de la valeur de consigne avant de remonter pour venir se plaquer contre cette dernière. Cette chute rapide est due au fait que notre modèle recommence à une valeur de sortie de 0 pour monter vers la valeur de consigne demandée. En réalité, la sortie ne se trouve bien entendu pas à 0! Ceci crée un écart important entre la valeur réelle et supposée et provoque la violente chute que nous observons.
+
 \begin{figure}[H]
 \includegraphics[width= 0.8\textwidth]{../Pictures/IMC/amorce_sys.png}
 \end{figure}
-La deuxième partie se déroule de 550 sec à 780 sec. Nous appliquons durant cette période un échelon de 10\% afin de vérifier la performance du régulateur en suivit de consigne. Remarquons que les performances du systèmes à ce sujet son excellente ! Nous remarquons en effet que le système retrouve un situations d'équilibre vers la 720ième seconde soit 140 secondes après le début de l'impulsion là où notre régulateur PID en mettait \#\#.
+La deuxième partie se déroule de 550 sec à 780 sec. Nous appliquons durant cette période un échelon de 10\% afin de vérifier la performance du régulateur en suivit de consigne. Remarquons que les performances du systèmes à ce sujet sont excellentes ! Nous remarquons en effet que le système retrouve une situation d'équilibre vers la 720ième seconde soit 140 secondes après le début de l'impulsion là où notre régulateur PID optimisé en mettait pratiquement 200 (Optimisation du régulateur - voir essai n 17 ). 
 \begin{figure}[H]
 \includegraphics[width= 0.8\textwidth]{../Pictures/IMC/suivit_consigne.png}
 \end{figure}
-Enfin, la troisième zone va de la 760ième seconde jusqu'à la fin. Cette zone correspond à l'insertion  d'une perturbation dans le système. Dans notre cas, l'action sur l'intérupteur de la résistance chauffante a provoqué une soudaine montée en température que notre régulateur a eu beaucoup de mal à neutraliser. La valeur de la résistance ayant en effet augmenté de 4\% avant d'être atténuée contre \#\# \% pour le régulateur PID, nous pouvons conclure que la réjection de perturbations est la grosse faiblesse de ce genre de régulateur. 
+Enfin, la troisième zone va de la 760ième seconde jusqu'à la fin. Cette zone correspond à l'insertion  d'une perturbation dans le système. Dans notre cas, l'action sur l'interrupteur de la résistance chauffante a provoqué une soudaine montée en température que notre régulateur a eu beaucoup de mal à neutraliser. La valeur de la résistance ayant en effet augmenté de 4\% avant d'être atténuée contre 0,4\% pour le régulateur PID optimisé (voir figure 23- Réponse du système à une variation du ventilateur de 50\% À 60\%). Nous pouvons conclure que la réjection de perturbations est la grosse faiblesse de ce genre de régulateur. 
 \begin{figure}[H]
 \includegraphics[width= 0.8\textwidth]{../Pictures/IMC/rej_perturb.png}
 \end{figure}
-Ceci est du au fait que \#\#.
-\subsection{Amélioration de la réjection de perturbation}
+Selon nous, ceci est dû au fait que en injectant une perturbation (c'est à dire en changeant la valeur de la résistance), nous recréons un système différent et au lequel notre fonction de transfert inverse n'est plus liée. Notre régulateur devient donc inadapté au système ce qui diminue très fortement ses performances. 
 
-\#\# La manip a merdé et je me souvient plus vrmt de pk ni de ce qu'on était sensé obtenir. à compléter !!s
+La situation dans laquelle nous nous trouvons est similaire à celle que nous aurions si nous n'avions rien changé au système, mais que nous avions modifier la fonction de transfert inverse "$H^{-1}(s)$". Le suivit de consigne dans ce cas-ci aurait également été beaucoup moins efficace.
+\subsection{Atténuation du pic à l'initialisation du système}
+
+Comme présenté précédement, nous constatons une importante chute de la valeur en sortie du sytème lors de l'activation du régulateur. Ceci étant dû au fait que le modèle récommence à zéro à son activation, nous pouvons aisément atténuer la chute en fixant dans le modèle une valeur proche de la valeur réelle de sortie du système lorsque que le régulateur est inactif. Cette valeur fixe nous permet de réduire l'écart entre la valeur réelle et la valeur modélisée au démarrage et donc de limiter la chute de la valeur de sortie du système. 
+
+Bien que relativement aisée à mettre en place, nous n'avons malheureusement pas eu le temps de mettre cette technique en place lors du laboratoire du à la lenteur de notre système, ni de revenir ultérieurement en laboratoire pour refaire toute la manipulation. Nous supposons cependant à la vue des résultats des autres groupes que nous aurions atteint des résulats similaires permettant de n'avoir une chute que de quelques pourcents( voir moins) au lieux des 23 \% que nous obtenions précédement. 
+
+
+
+
+
+
